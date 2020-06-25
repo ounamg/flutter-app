@@ -14,8 +14,8 @@ class _LoginPageState extends State<LoginPage> {
   String id;
   String password;
 
-  TextEditingController idController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  TextEditingController idController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
