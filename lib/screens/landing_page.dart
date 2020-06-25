@@ -25,7 +25,7 @@ class LandingPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 150.0,),
-              RaisedButton(child: Text('Continue'),
+              RaisedButton(child: Text('Continue ->'),
                 onPressed: (){
                 Navigator.pushNamed(context, LoginPage.id);
                 },
