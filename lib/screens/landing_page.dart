@@ -15,11 +15,14 @@ class LandingPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image(
-                image: AssetImage('images/logo1.png'),
+              Hero(
+                tag: 'logo',
+                child: Image(
+                  image: AssetImage('images/logo1.png'),
 //                height: 260.0,
 //                width: 500.0,
 //              alignment: ,
+                ),
               ),
               SizedBox(height: 150.0,),
               RaisedButton(child: Text('Continue'),
