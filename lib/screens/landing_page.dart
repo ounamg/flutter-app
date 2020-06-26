@@ -14,6 +14,7 @@ class LandingPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
+
             children: <Widget>[
               Hero(
                 tag: 'logo',

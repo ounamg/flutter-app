@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:truck/icons/rounded_icon_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:truck/constants.dart';
-import 'dart:io' show Platform;
+import '../icons/rounded_dropdown.dart';
 
 class LoginPage extends StatefulWidget {
   static String id = 'LoginPage';
@@ -11,58 +10,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-  String selectedMode = 'Manager';
-  List userMode = ['Client','Owner','Manager'];
-
-  DropdownButton<String> androidDropdown() {
-    List<DropdownMenuItem<String>> dropDownItems = [];
-    for (int i = 0; i < userMode.length; i++) {
-      String valueChosen = userMode[i];
-      var newItem = DropdownMenuItem(
-        child: Text(valueChosen),
-        value: valueChosen,
-      );
-      dropDownItems.add(newItem);
-    }
-    return DropdownButton<String>(
-      value: selectedMode,
-      items: dropDownItems,
-      isDense: true,
-      isExpanded: true,
-      icon: Icon(Icons.list),
-      dropdownColor: Colors.white,
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: 20.0,
-      ),
-      onChanged: (value) {
-        setState(() {
-          selectedMode = value;
-        });
-
-      },
-    );
-  }
-  CupertinoPicker iOSPicker() {
-    List<Text> pickerItems = [];
-    for (String valueChosen in userMode) {
-      pickerItems.add(Text(valueChosen));
-    }
-
-    return CupertinoPicker(
-      backgroundColor: Colors.lightBlue,
-      itemExtent: 32.0,
-      onSelectedItemChanged: (selectedIndex) {
-        setState(() {
-          selectedMode = userMode[selectedIndex];
-
-        });
-      },
-      children: pickerItems,
-    );
-  }
-
 
   bool _isLoading = false;
   String id;
@@ -90,21 +37,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           SizedBox(
-            height: 20.0,
+            height: 5.0,
           ),
-          Center(
-            child: Container(
-//              height: 150.0,
-              alignment: Alignment.center,
-              width: 90.0,
-//              padding: EdgeInsets.only(bottom: 30.0),
-              color: Colors.black54,
-
-              child: Platform.isIOS ? iOSPicker() : androidDropdown(),
-            ),
-          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[RoundedDropDown()],),
           Padding(
-            padding: const EdgeInsets.fromLTRB(32.0,32.0,32.0,4.0),
+            padding: const EdgeInsets.fromLTRB(32.0,4.0,32.0,4.0),
             child: TextField(
               style: TextStyle(
                 color: Colors.black,
