@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:truck/icons/rounded_icon_button.dart';
+import 'package:truck/button/rounded_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:truck/constants.dart';
-import 'package:truck/icons/dropdownbutton_login.dart';
+import 'package:truck/button/dropdownbutton_login.dart';
 import 'package:truck/screens/sign_up.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,7 +13,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  bool _isLoading = false;
+  bool _isLoading;
+//  _isLoading = false;
   String id;
   String password;
 
