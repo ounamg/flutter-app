@@ -3,14 +3,20 @@ import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
 
 class RoundedDropDown extends StatefulWidget {
+
+  final Function table;
+  String tableName;
+  RoundedDropDown(this.table);
   @override
   _RoundedDropDownState createState() => _RoundedDropDownState();
 }
+
 
 class _RoundedDropDownState extends State<RoundedDropDown> {
 
   String selectedMode = 'Manager';
   List userMode = ['Client', 'Owner', 'Manager'];
+
 
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropDownItems = [];
@@ -38,6 +44,15 @@ class _RoundedDropDownState extends State<RoundedDropDown> {
       onChanged: (value) {
         setState(() {
           selectedMode = value;
+          if(selectedMode=='Owner'){
+            widget.tableName= 'login_owner';
+          }else if(selectedMode=='Manager'){
+            widget.tableName= 'login_manager';
+          }else{
+            widget.tableName= 'login_client';
+          }
+          widget.table(widget.tableName);
+
         });
       },
     );

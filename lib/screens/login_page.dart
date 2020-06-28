@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:truck/constants.dart';
 import 'package:truck/button/dropdownbutton_login.dart';
 import 'package:truck/screens/sign_up.dart';
+import 'package:mysql1/mysql1.dart';
 
 class LoginPage extends StatefulWidget {
   static String id = 'LoginPage';
@@ -15,11 +16,42 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _isLoading;
 //  _isLoading = false;
-  String id;
+  String cid;
   String password;
+
+
 
   TextEditingController idController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+
+  String tableName;
+  String newTableName;
+
+  void table(String tableName) {
+    newTableName= tableName;
+  }
+
+  Future databaseEntry() async {
+    var newId;
+    var newPass;
+//    String table = roundedDropDown.tableName;
+    final conn = await MySqlConnection.connect(ConnectionSettings(
+        host: '10.0.2.2', port: 3306, user: 'root', db: 'logistic', password: 'Pragya1798*'));
+    var results = await conn.query('select lid, password from $newTableName where lid = $cid');
+    for (var row in results) {
+      newId= row[0];
+      newPass= row[1];
+      if(newId==cid && newPass == password){
+        print('valid');
+      }
+      else{
+        print('invalid');
+      }
+    }
+
+    await conn.close();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +79,7 @@ class _LoginPageState extends State<LoginPage> {
             Center(
               child: SizedBox(
                 width: 150.0,
-
-                child: RoundedDropDown(),
+                child: RoundedDropDown(table),
 
               ),
             ),
@@ -62,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
-                  id = value;
+                  cid = value;
                 },
                 decoration:
                 kTextFieldDecoration.copyWith(hintText: 'Enter id'),
@@ -94,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
               title: 'Log In',
               colour: Colors.black87,
               onPressed: () async {
+               databaseEntry();
                 setState(() {
                   _isLoading = true;
                 });
@@ -102,33 +134,35 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 13.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                FlatButton(
-                  textColor: Colors.black87,
-                  onPressed: () {
-                    Navigator.pushNamed(context, SignUp.id);
-                  },
-                  child: Text('SIGN UP', style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w800,
+            SizedBox(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  FlatButton(
+                    textColor: Colors.black87,
+                    onPressed: () {
+                      Navigator.pushNamed(context, SignUp.id);
+                    },
+                    child: Text('SIGN UP', style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                    ),
                   ),
-                  ),
-                ),
-                SizedBox(width: 10.0),
-                FlatButton(
-                  textColor: Colors.black87,
-                  onPressed: () {
+                  SizedBox(width: 10.0),
+                  FlatButton(
+                    textColor: Colors.black87,
+                    onPressed: () {
 //                  Navigator.pushNamed(context, routeName)
-                  },
-                  child: Text('Forgot Password', style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w800,
+                    },
+                    child: Text('Forgot Password', style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w800,
+                    ),
+                    ),
                   ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

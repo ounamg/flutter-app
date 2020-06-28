@@ -36,7 +36,6 @@ class LandingPage extends StatelessWidget {
                 hoverColor: Colors.yellow[100],
                 disabledColor: Colors.yellowAccent[250],
               )
-
             ],
           ),
         ),
