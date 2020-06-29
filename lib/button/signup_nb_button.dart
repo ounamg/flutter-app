@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class SignUpBackButton extends StatelessWidget {
   final backButton;
   SignUpBackButton({this.backButton});

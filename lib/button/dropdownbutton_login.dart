@@ -11,12 +11,10 @@ class RoundedDropDown extends StatefulWidget {
   _RoundedDropDownState createState() => _RoundedDropDownState();
 }
 
-
 class _RoundedDropDownState extends State<RoundedDropDown> {
 
   String selectedMode = 'Manager';
   List userMode = ['Client', 'Owner', 'Manager'];
-
 
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropDownItems = [];
@@ -81,13 +79,5 @@ class _RoundedDropDownState extends State<RoundedDropDown> {
     return Platform.isIOS ? iOSPicker() : androidDropdown();
   }
 }
-
-//Material(
-//elevation: 5.0,
-//
-//color: Colors.black12,
-//borderRadius: BorderRadius.circular(30.0),
-//child: Platform.isIOS ? iOSPicker() : androidDropdown()
-//);
 
 

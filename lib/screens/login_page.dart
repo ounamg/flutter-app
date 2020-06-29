@@ -6,6 +6,7 @@ import 'package:truck/button/dropdownbutton_login.dart';
 import 'package:truck/screens/sign_up.dart';
 import 'package:mysql1/mysql1.dart';
 
+
 class LoginPage extends StatefulWidget {
   static String id = 'LoginPage';
   @override
@@ -13,45 +14,46 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-  bool _isLoading;
-//  _isLoading = false;
+  bool _isLoading= false;
   String cid;
   String password;
-
+  String tableName;
+  String newTableName;
 
 
   TextEditingController idController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
-  String tableName;
-  String newTableName;
-
-  void table(String tableName) {
-    newTableName= tableName;
-  }
-
   Future databaseEntry() async {
-    var newId;
+    int newId;
     var newPass;
-//    String table = roundedDropDown.tableName;
+
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: '10.0.2.2', port: 3306, user: 'root', db: 'logistic', password: 'Pragya1798*'));
-    var results = await conn.query('select lid, password from $newTableName where lid = $cid');
+        host: '10.0.2.2',
+        port: 3306,
+        user: 'root',
+        db: 'logistic',
+        password: 'Pragya1798*'));
+    var results = await conn
+        .query('select lid, password from $newTableName where lid = $cid');
     for (var row in results) {
-      newId= row[0];
-      newPass= row[1];
-      if(newId==cid && newPass == password){
+      newId = row[0];
+      newPass = row[1];
+      if (newId == int.parse(cid) && newPass == password) {
         print('valid');
       }
-      else{
+      else {
         print('invalid');
       }
+
     }
 
     await conn.close();
   }
+  void table(String tableName) {
+    newTableName= tableName;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,11 +82,10 @@ class _LoginPageState extends State<LoginPage> {
               child: SizedBox(
                 width: 150.0,
                 child: RoundedDropDown(table),
-
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(32.0,32.0,32.0,4.0),
+              padding: const EdgeInsets.fromLTRB(32.0, 32.0, 32.0, 4.0),
               child: TextField(
                 style: TextStyle(
                   color: Colors.black,
@@ -95,15 +96,14 @@ class _LoginPageState extends State<LoginPage> {
                 onChanged: (value) {
                   cid = value;
                 },
-                decoration:
-                kTextFieldDecoration.copyWith(hintText: 'Enter id'),
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter id'),
               ),
             ),
             SizedBox(
               height: 2.0,
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(32.0,4.0,32.0,32.0),
+              padding: const EdgeInsets.fromLTRB(32.0, 4.0, 32.0, 32.0),
               child: TextField(
                 style: TextStyle(
                   color: Colors.black,
@@ -114,8 +114,8 @@ class _LoginPageState extends State<LoginPage> {
                 onChanged: (value) {
                   password = value;
                 },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter password'),
+                decoration:
+                    kTextFieldDecoration.copyWith(hintText: 'Enter password'),
               ),
             ),
             SizedBox(
@@ -125,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
               title: 'Log In',
               colour: Colors.black87,
               onPressed: () async {
-               databaseEntry();
+                databaseEntry();
                 setState(() {
                   _isLoading = true;
                 });
@@ -143,10 +143,12 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
                       Navigator.pushNamed(context, SignUp.id);
                     },
-                    child: Text('SIGN UP', style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    child: Text(
+                      'SIGN UP',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
                   SizedBox(width: 10.0),
@@ -155,10 +157,12 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {
 //                  Navigator.pushNamed(context, routeName)
                     },
-                    child: Text('Forgot Password', style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    child: Text(
+                      'Forgot Password',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
                 ],
