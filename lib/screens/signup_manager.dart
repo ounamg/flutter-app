@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:truck/button/signup_nb_button.dart';
+//import 'package:http/http.dart' as http;
 
 
+String apiKey = '9064752862718e103f06a800040204c2740956b7';
 class ManagerSignUp extends StatefulWidget {
   static String id = 'ManagerSignUp';
   @override
@@ -12,6 +14,10 @@ class ManagerSignUp extends StatefulWidget {
 class _ManagerSignUpState extends State<ManagerSignUp> {
   static int _currentStep = 0;
 
+
+
+
+
   bool visibleMeter(){
     if(_currentStep == 2){
       return true;
@@ -20,6 +26,8 @@ class _ManagerSignUpState extends State<ManagerSignUp> {
       return false;
     }
   }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,7 +52,7 @@ class _ManagerSignUpState extends State<ManagerSignUp> {
           onStepCancel: _currentStep > 0 ? () => setState(() => _currentStep -= 1) : null,
           controlsBuilder: (BuildContext context,
           {VoidCallback onStepContinue, VoidCallback onStepCancel}){
-            return Row(
+            return Column(
               children: <Widget>[
                 SizedBox(height: 70.0),
                 NextButton(continueButton: onStepContinue,),

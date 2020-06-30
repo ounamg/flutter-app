@@ -40,13 +40,14 @@ class _ClientSignUpState extends State<ClientSignUp> {
         port: 3306,
         user: 'root',
         db: 'logistic',
-        password: 'Pragya1798*'));
+        password: 'Ati@radeon1'));
     var countId = await conn.query('SELECT lid FROM login_client order by lid DESC LIMIT 1;');
     print(countId);
     for (var row in countId) {
       newId = row[0];
       newId++;
-      print(newId);
+      cid = newId;
+//      print('2: $cid');
     }
     await conn.close();
   }
@@ -57,12 +58,13 @@ class _ClientSignUpState extends State<ClientSignUp> {
         port: 3306,
         user: 'root',
         db: 'logistic',
-        password: 'Pragya1798*'));
+        password: 'Ati@radeon1'));
     var countCompanyId = await conn.query('SELECT company_lid FROM client_company order by lid DESC LIMIT 1;');
     print(countCompanyId);
     for (var row in countCompanyId) {
       newCompanyId = row[0];
       newCompanyId++;
+      companyId = newCompanyId;
       print(newCompanyId);
     }
     await conn.close();
@@ -75,36 +77,36 @@ class _ClientSignUpState extends State<ClientSignUp> {
           port: 3306,
           user: 'root',
           db: 'logistic',
-          password: 'Pragya1798*'));
+          password: 'Ati@radeon1'));
 
       var result1 = await conn.query(
           'insert into client_personal (lid, Name, personal_contact_number, email, aadhar_number, company_lid) values (?,?,?,?,?,?)',
           [cid, name, personalContactNumber, email, aadharNumber, companyId]);
 
-//      var result2 = await conn.query(
-//          'insert into client_company (company_id, company_name, work_type, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email, lid) values (?,?, ?, ?,?,?, ?, ?,?, ?, ?,?)',
-//          [
-//            companyId,
-//            companyName,
-//            workType,
-//            companyRegistrationNumber,
-//            addLine1,
-//            addLine2,
-//            city,
-//            state,
-//            pincode,
-//            officeContactNumber,
-//            officeEmail,
-//            cid
-//          ]);
+      var result2 = await conn.query(
+          'insert into client_company (company_id, company_name, work_type, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email, lid) values (?,?, ?, ?,?,?, ?, ?,?, ?, ?,?)',
+          [
+            companyId,
+            companyName,
+            workType,
+            companyRegistrationNumber,
+            addLine1,
+            addLine2,
+            city,
+            state,
+            pincode,
+            officeContactNumber,
+            officeEmail,
+            cid
+          ]);
 //
-//      var result3 = await conn.query(
-//          'insert into login_client (lid, password) values (?,?)',
-//          [cid, password]);
+      var result3 = await conn.query(
+          'insert into login_client (lid, password) values (?,?)',
+          [cid, password]);
 
-      print(result1);
+//      print(result1);
 //      print(result2);
-//      print(result3);
+      print(result3);
       await conn.close();
     }
 
@@ -231,7 +233,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                     TextFormField(
                       decoration: InputDecoration(labelText: 'Address Line 2'),
                       onChanged: (value) {
-                        addLine1 = value;
+                        addLine2 = value;
                       },
                     ),
                     TextFormField(
@@ -282,9 +284,9 @@ class _ClientSignUpState extends State<ClientSignUp> {
                         style: TextStyle(decoration: TextDecoration.underline),
                         textAlign: TextAlign.start,), onPressed: () {
                       getLid();
-                      cid = newId;
+
                       getCompanyLid();
-                      companyId = newCompanyId;
+
                     },
                     ),
                     TextFormField(

@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
         port: 3306,
         user: 'root',
         db: 'logistic',
-        password: 'Pragya1798*'));
+        password: 'Ati@radeon1'));
     var results = await conn
         .query('select lid, password from $newTableName where lid = $cid');
     for (var row in results) {

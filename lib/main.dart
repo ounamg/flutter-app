@@ -5,12 +5,18 @@ import 'package:truck/screens/sign_up.dart';
 import 'package:truck/screens/signup_owner.dart';
 import 'package:truck/screens/signup_client.dart';
 import 'package:truck/screens/signup_manager.dart';
+import 'package:mysql1/mysql1.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
+
+
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
