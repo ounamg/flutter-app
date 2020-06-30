@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:truck/screens/signup_client.dart';
-import 'package:truck/screens/signup_manager.dart';
-import 'package:truck/screens/signup_owner.dart';
+import 'file:///D:/Android/Project/truck/lib/screens/signup/signup_client.dart';
+import 'file:///D:/Android/Project/truck/lib/screens/signup/signup_manager.dart';
+import 'file:///D:/Android/Project/truck/lib/screens/signup/signup_owner.dart';
 //import 'package:truck/constants.dart';
 
 class SignUp extends StatefulWidget {

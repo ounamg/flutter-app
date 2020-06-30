@@ -16,3 +16,14 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+const kDrawerText = TextStyle(
+  fontStyle: FontStyle.normal,
+  fontSize: 15.0,
+  fontWeight: FontWeight.bold,
+  letterSpacing: 1.0
+);
+//const kDrawerBg = Borde
+const kAppBarText = TextStyle(
+    color: Colors.white, fontStyle: FontStyle.italic
+);

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:truck/screens/landing_page.dart';
 import 'package:truck/screens/login_page.dart';
-import 'package:truck/screens/sign_up.dart';
-import 'package:truck/screens/signup_owner.dart';
-import 'package:truck/screens/signup_client.dart';
-import 'package:truck/screens/signup_manager.dart';
-import 'package:mysql1/mysql1.dart';
-
+import 'file:///D:/Android/Project/truck/lib/screens/signup/sign_up.dart';
+import 'file:///D:/Android/Project/truck/lib/screens/signup/signup_owner.dart';
+import 'file:///D:/Android/Project/truck/lib/screens/signup/signup_client.dart';
+import 'file:///D:/Android/Project/truck/lib/screens/signup/signup_manager.dart';
+import 'file:///D:/Android/Project/truck/lib/screens/owner/owner_main.dart';
+import 'package:truck/screens/owner/owner_info.dart';
 void main() {
   runApp(MyApp());
 }
@@ -31,7 +31,8 @@ class MyApp extends StatelessWidget {
         OwnerSignUp.id:(context) => OwnerSignUp(),
         ManagerSignUp.id:(context) => ManagerSignUp(),
         ClientSignUp.id:(context) => ClientSignUp(),
-        OwnerSignUp.id:(context) => OwnerSignUp(),
+        OwnerMain.id:(context) => OwnerMain(),
+        OwnerInfo.id:(context) => OwnerInfo(),
       },
     );
   }

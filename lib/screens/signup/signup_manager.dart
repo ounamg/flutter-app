@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:truck/button/signup_nb_button.dart';
 import 'package:mysql1/mysql1.dart';
-import '../screens/login_page.dart';
+import 'package:truck/screens/login_page.dart';
 
 
 String apiKey = '9064752862718e103f06a800040204c2740956b7';

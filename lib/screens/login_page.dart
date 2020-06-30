@@ -3,8 +3,10 @@ import 'package:truck/button/rounded_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:truck/constants.dart';
 import 'package:truck/button/dropdownbutton_login.dart';
-import 'package:truck/screens/sign_up.dart';
+import 'file:///D:/Android/Project/truck/lib/screens/owner/owner_main.dart';
+import 'file:///D:/Android/Project/truck/lib/screens/signup/sign_up.dart';
 import 'package:mysql1/mysql1.dart';
+
 
 
 class LoginPage extends StatefulWidget {
@@ -86,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
         resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.yellowAccent[200],
         appBar: AppBar(
-          title: Text('Login'),
+          title: Text('Login',style: kAppBarText,),
           backgroundColor: Colors.black38,
         ),
         body: Column(
@@ -184,6 +186,19 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(
                       'Forgot Password',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                  FlatButton(
+                    textColor: Colors.black87,
+                    onPressed: () {
+                  Navigator.pushNamed(context, OwnerMain.id);
+                    },
+                    child: Text(
+                      'Owner Page Demo',
                       style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w800,
