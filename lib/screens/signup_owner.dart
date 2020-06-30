@@ -3,6 +3,8 @@ import 'package:truck/button/signup_nb_button.dart';
 import 'package:mysql1/mysql1.dart';
 import '../screens/login_page.dart';
 
+// commit was creating issue
+
 class OwnerSignUp extends StatefulWidget {
   static String id = 'OwnerSignUp';
   @override
