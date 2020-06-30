@@ -24,6 +24,33 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController idController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Invalid Login Credentials'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Id and password do not match.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future databaseEntry() async {
     int newId;
     var newPass;
@@ -33,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
         port: 3306,
         user: 'root',
         db: 'logistic',
-        password: 'Ati@radeon1'));
+        password: 'Pragya1798*'));
     var results = await conn
         .query('select lid, password from $newTableName where lid = $cid');
     for (var row in results) {
@@ -43,17 +70,14 @@ class _LoginPageState extends State<LoginPage> {
         print('valid');
       }
       else {
-        print('invalid');
+        _showMyDialog();
       }
-
     }
-
     await conn.close();
   }
   void table(String tableName) {
     newTableName= tableName;
   }
-
 
   @override
   Widget build(BuildContext context) {

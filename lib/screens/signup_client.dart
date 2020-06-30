@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:truck/button/signup_nb_button.dart';
 import 'package:mysql1/mysql1.dart';
-import 'dart:convert';
-
 import 'package:truck/screens/login_page.dart';
 
 class ClientSignUp extends StatefulWidget {
@@ -40,7 +38,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
         port: 3306,
         user: 'root',
         db: 'logistic',
-        password: 'Ati@radeon1'));
+        password: 'Pragya1798*'));
     var countId = await conn.query('SELECT lid FROM login_client order by lid DESC LIMIT 1;');
     print(countId);
     for (var row in countId) {
@@ -58,14 +56,14 @@ class _ClientSignUpState extends State<ClientSignUp> {
         port: 3306,
         user: 'root',
         db: 'logistic',
-        password: 'Ati@radeon1'));
-    var countCompanyId = await conn.query('SELECT company_lid FROM client_company order by lid DESC LIMIT 1;');
+        password: 'Pragya1798*'));
+    var countCompanyId = await conn.query('SELECT company_lid FROM client_company order by company_lid DESC LIMIT 1;');
     print(countCompanyId);
     for (var row in countCompanyId) {
       newCompanyId = row[0];
-      newCompanyId++;
+//      newCompanyId++;
       companyId = newCompanyId;
-      print(newCompanyId);
+      print(companyId);
     }
     await conn.close();
   }
@@ -77,16 +75,16 @@ class _ClientSignUpState extends State<ClientSignUp> {
           port: 3306,
           user: 'root',
           db: 'logistic',
-          password: 'Ati@radeon1'));
+          password: 'Pragya1798*'));
 
       var result1 = await conn.query(
           'insert into client_personal (lid, Name, personal_contact_number, email, aadhar_number, company_lid) values (?,?,?,?,?,?)',
-          [cid, name, personalContactNumber, email, aadharNumber, companyId]);
+          [cid, name, personalContactNumber, email, aadharNumber, companyId++]);
 
       var result2 = await conn.query(
           'insert into client_company (company_lid, company_name, work_type, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email, lid) values (?,?, ?, ?,?,?, ?, ?,?, ?, ?,?)',
           [
-            companyId,
+            companyId++,
             companyName,
             workType,
             companyRegistrationNumber,
@@ -104,8 +102,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
           'insert into login_client (lid, password) values (?,?)',
           [cid, password]);
 
-//      print(result1);
-//      print(result2);
+      print(result1);
+      print(result2);
       print(result3);
       await conn.close();
     }
@@ -119,13 +117,13 @@ class _ClientSignUpState extends State<ClientSignUp> {
         return false;
       }
     }
-    String validator(value){
-        var numValue = int.tryParse(value);
-        if(numValue >= 5 && numValue < 100) {
-          return null;
-        }
-        return 'Inavlid Format';
-      }
+//    String validator(value){
+//        var numValue = int.tryParse(value);
+//        if(numValue >= 5 && numValue < 100) {
+//          return null;
+//        }
+//        return 'Inavlid Format';
+//      }
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
@@ -136,7 +134,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Details added can be changed after loggin in later.'),
+                Text('Details added can be changed after logging in later.'),
               ],
             ),
           ),
@@ -196,7 +194,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
             steps: <Step>
             [
               Step(
-//STEP1
+//STEP1CONTINUE!
                 title: Text('Personal Details'),
                 isActive: _currentStep >= 0,
                 state: _currentStep >= 0 ? StepState.complete : StepState
@@ -319,7 +317,6 @@ class _ClientSignUpState extends State<ClientSignUp> {
                         style: TextStyle(decoration: TextDecoration.underline),
                         textAlign: TextAlign.start,), onPressed: () {
                       getLid();
-
                       getCompanyLid();
 
                     },
