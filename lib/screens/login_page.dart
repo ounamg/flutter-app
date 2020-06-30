@@ -97,6 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                   cid = value;
                 },
                 decoration: kTextFieldDecoration.copyWith(hintText: 'Enter id'),
+
               ),
             ),
             SizedBox(

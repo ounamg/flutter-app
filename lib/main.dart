@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
         OwnerSignUp.id:(context) => OwnerSignUp(),
         ManagerSignUp.id:(context) => ManagerSignUp(),
         ClientSignUp.id:(context) => ClientSignUp(),
+        OwnerSignUp.id:(context) => OwnerSignUp(),
       },
     );
   }

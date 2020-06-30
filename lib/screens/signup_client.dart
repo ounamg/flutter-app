@@ -84,7 +84,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
           [cid, name, personalContactNumber, email, aadharNumber, companyId]);
 
       var result2 = await conn.query(
-          'insert into client_company (company_id, company_name, work_type, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email, lid) values (?,?, ?, ?,?,?, ?, ?,?, ?, ?,?)',
+          'insert into client_company (company_lid, company_name, work_type, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email, lid) values (?,?, ?, ?,?,?, ?, ?,?, ?, ?,?)',
           [
             companyId,
             companyName,
@@ -119,8 +119,42 @@ class _ClientSignUpState extends State<ClientSignUp> {
         return false;
       }
     }
+    String validator(value){
+        var numValue = int.tryParse(value);
+        if(numValue >= 5 && numValue < 100) {
+          return null;
+        }
+        return 'Inavlid Format';
+      }
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Submit Form'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Details added can be changed after loggin in later.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Submit'),
+              onPressed: () {
+                Navigator.pushNamed(context, LoginPage.id);
+                databaseEntry();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-    @override
+  @override
     Widget build(BuildContext context) {
       return SafeArea(
         child: Scaffold(
@@ -143,7 +177,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
             currentStep: _currentStep,
             onStepTapped: (int step) => setState(() => _currentStep = step),
             onStepContinue: _currentStep < 2 ? () =>
-                setState(() => _currentStep += 1) : () => {databaseEntry(), Navigator.pushNamed(context, LoginPage.id)},
+                setState(() => _currentStep += 1) : () => _showMyDialog(),
             onStepCancel: _currentStep > 0 ? () =>
                 setState(() => _currentStep -= 1) : () =>
                 setState(() => Navigator.pop(context)),
@@ -180,6 +214,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                       onChanged: (value) {
                         personalContactNumber = value;
                       },
+
                     ),
                     TextFormField(
                       decoration: InputDecoration(labelText: 'Email Id'),
@@ -190,7 +225,7 @@ class _ClientSignUpState extends State<ClientSignUp> {
                     TextFormField(
                       decoration: InputDecoration(labelText: 'Aadhar Id'),
                       onChanged: (value) {
-                        email = value;
+                        aadharNumber = value;
                       },
                     ),
                   ],
@@ -244,8 +279,8 @@ class _ClientSignUpState extends State<ClientSignUp> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(labelText: 'State'),
-                      onChanged: (value) {
-                        state = value;
+                      onChanged: (newvalue) {
+                        state = newvalue;
                       },
                     ),
                     TextFormField(
