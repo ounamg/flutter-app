@@ -3,9 +3,10 @@ import 'package:truck/button/rounded_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:truck/constants.dart';
 import 'package:truck/button/dropdownbutton_login.dart';
-import 'file:///D:/Android/Project/truck/lib/screens/owner/owner_main.dart';
+
 import 'file:///D:/Android/Project/truck/lib/screens/signup/sign_up.dart';
 import 'package:mysql1/mysql1.dart';
+import 'package:truck/screens/owner/owner_main.dart';
 
 
 
@@ -18,6 +19,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading= false;
   String cid;
+  int pid = 1001;
+
   String password;
   String tableName;
   String newTableName;
@@ -62,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
         port: 3306,
         user: 'root',
         db: 'logistic',
-        password: 'Pragya1798*'));
+        password: 'Ati@radeon1'));
     var results = await conn
         .query('select lid, password from $newTableName where lid = $cid');
     for (var row in results) {
@@ -155,9 +158,15 @@ class _LoginPageState extends State<LoginPage> {
                 databaseEntry();
                 setState(() {
                   _isLoading = true;
+                  String table1 = newTableName;
                 });
-              },
-            ),
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return OwnerMain(idGetter: pid,);
+                },
+                )
+                );
+              }
+    ),
             SizedBox(
               height: 13.0,
             ),
@@ -186,19 +195,6 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Text(
                       'Forgot Password',
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
-                  FlatButton(
-                    textColor: Colors.black87,
-                    onPressed: () {
-                  Navigator.pushNamed(context, OwnerMain.id);
-                    },
-                    child: Text(
-                      'Owner Page Demo',
                       style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w800,

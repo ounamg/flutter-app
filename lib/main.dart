@@ -7,6 +7,8 @@ import 'file:///D:/Android/Project/truck/lib/screens/signup/signup_client.dart';
 import 'file:///D:/Android/Project/truck/lib/screens/signup/signup_manager.dart';
 import 'file:///D:/Android/Project/truck/lib/screens/owner/owner_main.dart';
 import 'package:truck/screens/owner/owner_info.dart';
+import 'package:truck/screens/owner/owner_trucklist.dart';
+//import 'package:truck/trial.dart';
 void main() {
   runApp(MyApp());
 }
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
         ClientSignUp.id:(context) => ClientSignUp(),
         OwnerMain.id:(context) => OwnerMain(),
         OwnerInfo.id:(context) => OwnerInfo(),
+//        AppTrial.id:(context) => AppTrial(),
       },
     );
   }
