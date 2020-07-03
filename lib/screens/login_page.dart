@@ -3,12 +3,9 @@ import 'package:truck/button/rounded_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:truck/constants.dart';
 import 'package:truck/button/dropdownbutton_login.dart';
-
-import 'file:///D:/Android/Project/truck/lib/screens/signup/sign_up.dart';
+import '../screens/signup/sign_up.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:truck/screens/owner/owner_main.dart';
-
-
 
 class LoginPage extends StatefulWidget {
   static String id = 'LoginPage';

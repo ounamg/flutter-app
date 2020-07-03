@@ -19,7 +19,7 @@ const kTextFieldDecoration = InputDecoration(
 
 const kDrawerText = TextStyle(
   fontStyle: FontStyle.normal,
-  fontSize: 15.0,
+  fontSize: 20.0,
   fontWeight: FontWeight.bold,
   letterSpacing: 1.0
 );

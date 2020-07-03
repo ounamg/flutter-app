@@ -105,17 +105,13 @@ class _OwnerInfoState extends State<OwnerInfo> {
 
   @override
   void initState() {
-
-//      });
     super.initState();
     setState(() {
       lid = widget.idGetter;
     });
     print(lid);
     getOwnerDetails();
-
 //      _timer = Timer(Duration(milliseconds: 5000), () {
-
   }
 
   @override
