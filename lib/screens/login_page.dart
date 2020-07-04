@@ -14,7 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _isLoading= false;
+  bool _isLoading = false;
   String cid;
   int pid = 1001;
 
@@ -58,11 +58,11 @@ class _LoginPageState extends State<LoginPage> {
     var newPass;
 
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: '10.0.2.2',
+        host: 'mysql5021.site4now.net',
         port: 3306,
-        user: 'root',
-        db: 'logistic',
-        password: 'Ati@radeon1'));
+        user: 'a5e6d1_demo102',
+        db: 'db_a5e6d1_demo102',
+        password: 'Admin@123#'));
     var results = await conn
         .query('select lid, password from $newTableName where lid = $cid');
     for (var row in results) {

@@ -50,11 +50,11 @@ class _OwnerInfoState extends State<OwnerInfo> {
 
   Future setOwnerDetails() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: '10.0.2.2',
+        host: 'mysql5021.site4now.net',
         port: 3306,
-        user: 'root',
-        db: 'logistic',
-        password: 'Ati@radeon1'));
+        user: 'a5e6d1_demo102',
+        db: 'db_a5e6d1_demo102',
+        password: 'Admin@123#'));
     var result3 = await conn.query("update owner_personal set name='$name', personal_contact_number='$personalContactNumber', email='$email', aadhar_number='$aadharNumber' where lid='$lid'");
     var result4 = await conn.query("update owner_company set company_name='$companyName', company_registration_number='$companyRegistrationNumber', address_number='$addLine1', address_area='$addLine2', city='$city', state='$state', pincode='$pincode', office_contact_number='$officeContactNumber', office_email='$officeEmail' where company_lid='$companyId'");
     await conn.close();
@@ -62,11 +62,11 @@ class _OwnerInfoState extends State<OwnerInfo> {
 
   Future getOwnerDetails() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: '10.0.2.2',
+        host: 'mysql5021.site4now.net',
         port: 3306,
-        user: 'root',
-        db: 'logistic',
-        password: 'Ati@radeon1'));
+        user: 'a5e6d1_demo102',
+        db: 'db_a5e6d1_demo102',
+        password: 'Admin@123#'));
     var result1= await conn.query(
         'SELECT name, personal_contact_number, email, aadhar_number, company_lid FROM owner_personal where lid=$lid');
 
@@ -400,7 +400,7 @@ class _OwnerInfoState extends State<OwnerInfo> {
                         color: Colors.black,
                       ),
                       decoration: InputDecoration(
-                        labelText: 'Companyr Name',
+                        labelText: 'Company Name',
                         border: InputBorder.none,),
                       onChanged: (value) {
                         companyName = value;
@@ -562,5 +562,3 @@ class _OwnerInfoState extends State<OwnerInfo> {
       );
   }
 }
-
-

@@ -27,11 +27,11 @@ class _OwnerTruckListState extends State<OwnerTruckList> {
   Future setTruckDetails() async {
 
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: '10.0.2.2',
+        host: 'mysql5021.site4now.net',
         port: 3306,
-        user: 'root',
-        db: 'logistic',
-        password: 'Ati@radeon1'));
+        user: 'a5e6d1_demo102',
+        db: 'db_a5e6d1_demo102',
+        password: 'Admin@123#'));
     var result1 = await conn.query("select count(*) from trucks where owner_lid=$cid");
     var result2 = await conn.query("select truck_number, vehicle_class,driver_name,driver_lid,manager_name,manager_lid from trucks where owner_lid=$cid");
     resultFinal= result2;

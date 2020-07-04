@@ -22,11 +22,11 @@ class _OwnerMainState extends State<OwnerMain> {
 
   Future getOwnerDetails() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: '10.0.2.2',
+        host: 'mysql5021.site4now.net',
         port: 3306,
-        user: 'root',
-        db: 'logistic',
-        password: 'Ati@radeon1'));
+        user: 'a5e6d1_demo102',
+        db: 'db_a5e6d1_demo102',
+        password: 'Admin@123#'));
     var result1= await conn.query(
         'SELECT name FROM owner_personal where lid=$lid');
 
@@ -42,7 +42,6 @@ class _OwnerMainState extends State<OwnerMain> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getOwnerDetails();
     setState(() {

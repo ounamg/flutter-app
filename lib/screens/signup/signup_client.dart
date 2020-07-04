@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:truck/button/signup_nb_button.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:truck/screens/login_page.dart';
+import 'package:http/http.dart' as http;
 
 class ClientSignUp extends StatefulWidget {
   static String id = 'ClientSignUp';
@@ -34,12 +35,13 @@ class _ClientSignUpState extends State<ClientSignUp> {
 
   Future getLid() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: '10.0.2.2',
+        host: 'mysql5021.site4now.net',
         port: 3306,
-        user: 'root',
-        db: 'logistic',
-        password: 'Pragya1798*'));
-    var countId = await conn.query('SELECT lid FROM login_client order by lid DESC LIMIT 1;');
+        user: 'a5e6d1_demo102',
+        db: 'db_a5e6d1_demo102',
+        password: 'Admin@123#'));
+    print('connected');
+    var countId = await conn.query('SELECT * FROM loginclient');
     print(countId);
     for (var row in countId) {
       newId = row[0];
@@ -52,11 +54,11 @@ class _ClientSignUpState extends State<ClientSignUp> {
 
   Future getCompanyLid() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: '10.0.2.2',
+        host: 'mysql5021.site4now.net',
         port: 3306,
-        user: 'root',
-        db: 'logistic',
-        password: 'Pragya1798*'));
+        user: 'a5e6d1_demo102',
+        db: 'db_a5e6d1_demo102',
+        password: 'Admin@123#'));
     var countCompanyId = await conn.query('SELECT company_lid FROM client_company order by company_lid DESC LIMIT 1;');
     print(countCompanyId);
     for (var row in countCompanyId) {
@@ -71,39 +73,39 @@ class _ClientSignUpState extends State<ClientSignUp> {
 
     Future databaseEntry() async {
       final conn = await MySqlConnection.connect(ConnectionSettings(
-          host: '10.0.2.2',
+          host: 'mysql5021.site4now.net',
           port: 3306,
-          user: 'root',
-          db: 'logistic',
-          password: 'Pragya1798*'));
-
+          user: 'a5e6d1_demo102',
+          db: 'db_a5e6d1_demo102',
+          password: 'Admin@123#'));
+      print('connected');
       var result1 = await conn.query(
-          'insert into client_personal (lid, Name, personal_contact_number, email, aadhar_number, company_lid) values (?,?,?,?,?,?)',
+          'insert into clients (client_id, sender_name, aadhar_number, mobile_no, email, alt_mobile, company_name, work_type, company_reg_no,company_address,company_add_city,company_add_state,company_add_pin) values (?,?,?,?,?,?,?,?,?,?,?,?,?)',
           [cid, name, personalContactNumber, email, aadharNumber, companyId++]);
 
-      var result2 = await conn.query(
-          'insert into client_company (company_lid, company_name, work_type, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email, lid) values (?,?, ?, ?,?,?, ?, ?,?, ?, ?,?)',
-          [
-            companyId++,
-            companyName,
-            workType,
-            companyRegistrationNumber,
-            addLine1,
-            addLine2,
-            city,
-            state,
-            pincode,
-            officeContactNumber,
-            officeEmail,
-            cid
-          ]);
-//
+//      var result2 = await conn.query(
+//          'insert into client_company (company_lid, company_name, work_type, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email, lid) values (?,?, ?, ?,?,?, ?, ?,?, ?, ?,?)',
+//          [
+//            companyId++,
+//            companyName,
+//            workType,
+//            companyRegistrationNumber,
+//            addLine1,
+//            addLine2,
+//            city,
+//            state,
+//            pincode,
+//            officeContactNumber,
+//            officeEmail,
+//            cid
+//          ]);
+////
       var result3 = await conn.query(
-          'insert into login_client (lid, password) values (?,?)',
+          'insert into loginclient (client_id, client_pass) values (?,?)',
           [cid, password]);
 
       print(result1);
-      print(result2);
+//      print(result2);
       print(result3);
       await conn.close();
     }
