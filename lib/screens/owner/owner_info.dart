@@ -213,12 +213,67 @@ class _OwnerInfoState extends State<OwnerInfo> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        appBar: AppBar(
-          title: Text(
-            'Information',
-            style: kAppBarText,
+          drawer: ClipRRect(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
+            child: Drawer(
+
+              child: ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  Container(
+                    color: Color(0xff0C1338),
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.all(10.0,),
+                    child: DrawerHeader(
+                      child: CircleAvatar(
+                        child: Text('OG',style: kDrawerText,),
+
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    dense: false,
+
+                    title: Text('Logout',style: kDrawerText,),
+                    onTap: () {
+
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Help',style: kDrawerText,),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Language',style: kDrawerText,),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Settings',style: kDrawerText,),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
+          appBar: AppBar(
+            title: Text('Information', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
+            actions: <Widget>[FlatButton(child: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){Navigator.pop(context);})],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),
+            ),
+            backgroundColor: Color(0xff0C1338),
+          ),
         body: Container(
         height: MediaQuery.of(context).size.height,
     decoration: BoxDecoration(
@@ -235,6 +290,7 @@ class _OwnerInfoState extends State<OwnerInfo> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Card(
+              color: Color(0xffF2F4F7),
               child: Padding(
                 padding: const EdgeInsets.only(left: 12.0),
                 child: Column(
@@ -262,6 +318,7 @@ class _OwnerInfoState extends State<OwnerInfo> {
               height: 30.0,
             ),
             Card(
+              color: Color(0xffF2F4F7),
               child: Padding(
                 padding: const EdgeInsets.only(left: 12.0),
                 child: Column(
@@ -362,6 +419,7 @@ class _OwnerInfoState extends State<OwnerInfo> {
               height: 30.0,
             ),
             Card(
+              color: Color(0xffF2F4F7),
               child: Padding(
                 padding: const EdgeInsets.only(left: 12.0),
                 child: Column(

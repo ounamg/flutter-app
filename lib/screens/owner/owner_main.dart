@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:truck/constants.dart';
+import 'package:truck/screens/owner/owner_driverlist.dart';
 import 'package:truck/screens/owner/owner_info.dart';
 import 'package:truck/screens/owner/owner_trucklist.dart';
 import 'package:mysql1/mysql1.dart';
@@ -63,61 +64,72 @@ class _OwnerMainState extends State<OwnerMain> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.yellowAccent[200],
-        drawer: Drawer(
+        backgroundColor: Colors.white,
+        drawer: ClipRRect(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
+          child: Drawer(
 
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.all(10.0,),
-                child: DrawerHeader(
-                  child: CircleAvatar(
-                    child: Text('OG',style: kDrawerText,),
+            child: ListView(
+              // Important: Remove any padding from the ListView.
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                Container(
+                  color: Color(0xff0C1338),
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.all(10.0,),
+                  child: DrawerHeader(
+                    child: CircleAvatar(
+                      child: Text('OG',style: kDrawerText,),
 
+                    ),
                   ),
                 ),
-              ),
-              ListTile(
-                title: Text('Logout',style: kDrawerText,),
-                onTap: () {
+                ListTile(
+                  dense: false,
 
-                },
-              ),
-              ListTile(
-                title: Text('Help',style: kDrawerText,),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                title: Text('Language',style: kDrawerText,),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                title: Text('Settings',style: kDrawerText,),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-            ],
+                  title: Text('Logout',style: kDrawerText,),
+                  onTap: () {
+
+                  },
+                ),
+                ListTile(
+                  title: Text('Help',style: kDrawerText,),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+                ListTile(
+                  title: Text('Language',style: kDrawerText,),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+                ListTile(
+                  title: Text('Settings',style: kDrawerText,),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         appBar: AppBar(
-          title: Text('Weclome $name', style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic),),
-          backgroundColor: Colors.black38,
+          title: Text('Welcome $name', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
+          actions: <Widget>[FlatButton(child: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){Navigator.pop(context);})],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),
+          ),
+          backgroundColor: Color(0xff0C1338),
         ),
         body: Container(
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
-              color: Colors.yellowAccent[200],
+              color: Colors.white,
             ),
             child: isLoading
                 ? Center(
@@ -132,7 +144,7 @@ class _OwnerMainState extends State<OwnerMain> {
                   children: <Widget>[
 
                     Card(
-                      color: Colors.white,
+                      color: Color(0xffF2F4F7),
                       child: ListTile(
                         leading: Icon(Icons.content_paste,size: 56.0,color: Colors.black87,),
                         title: Text('Information'),
@@ -147,7 +159,7 @@ class _OwnerMainState extends State<OwnerMain> {
                       ),
                     ),
                     Card(
-                      color: Colors.white,
+                      color: Color(0xffF2F4F7),
                       child: ListTile(
                         leading: Icon(Icons.local_shipping,size: 56.0,color: Colors.black87,),
                         title: Text('Trucks'),
@@ -163,18 +175,22 @@ class _OwnerMainState extends State<OwnerMain> {
                       ),
                     ),
                     Card(
-                      color: Colors.white,
+                      color: Color(0xffF2F4F7),
                       child: ListTile(
                         leading: Icon(Icons.person,size: 56.0,color: Colors.black87,),
                         title: Text('Driver'),
                         subtitle: Text('Hired Drivers, Drivers on Duty'),
                         onTap: (){
-//                      Navigator.pushNamed(context, ManagerSignUp.id);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return OwnerDriverList();
+                          },
+                          )
+                          );
                         },
                       ),
                     ),
                     Card(
-                      color: Colors.white,
+                      color: Color(0xffF2F4F7),
                       child: ListTile(
                         leading: Icon(Icons.person_add,size: 56.0,color: Colors.black87,),
                         title: Text('Assistance'),
@@ -185,7 +201,7 @@ class _OwnerMainState extends State<OwnerMain> {
                       ),
                     ),
                     Card(
-                      color: Colors.white,
+                      color: Color(0xffF2F4F7),
                       child: ListTile(
                         leading: Icon(Icons.person_pin_circle,size: 56.0,color: Colors.black87,),
                         title: Text('Managers'),
@@ -196,7 +212,7 @@ class _OwnerMainState extends State<OwnerMain> {
                       ),
                     ),
                     Card(
-                      color: Colors.white,
+                      color: Color(0xffF2F4F7),
                       child: ListTile(
                         leading: Icon(Icons.inbox,size: 56.0,color: Colors.black87,),
                         title: Text('Consignments'),
@@ -207,7 +223,7 @@ class _OwnerMainState extends State<OwnerMain> {
                       ),
                     ),
                     Card(
-                      color: Colors.white,
+                      color: Color(0xffF2F4F7),
                       child: ListTile(
                         leading: Icon(Icons.receipt,size: 56.0,color: Colors.black87,),
                         title: Text('Finance'),

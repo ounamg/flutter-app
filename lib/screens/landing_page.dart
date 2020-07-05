@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:truck/screens/login_page.dart';
+import 'package:truck/button/rounded_icon_button.dart';
 
 class LandingPage extends StatelessWidget {
   static String id = 'LandingPage';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       home: Scaffold(
-        backgroundColor: Colors.yellowAccent[200],
+        backgroundColor: Colors.white,
         body: SafeArea(
         child: Center(
           child: Column(
@@ -18,6 +20,7 @@ class LandingPage extends StatelessWidget {
             children: <Widget>[
               Hero(
                 tag: 'logo',
+
                 child: Image(
                   image: AssetImage('images/logo1.png'),
 //                height: 260.0,
@@ -25,17 +28,23 @@ class LandingPage extends StatelessWidget {
 //              alignment: ,
                 ),
               ),
-              SizedBox(height: 150.0,),
-              RaisedButton(child: Text('Continue ->'),
-                onPressed: (){
+              SizedBox(height: 50.0,),
+              Text('Welcome to the one and only Whore Finder App'),
+              SizedBox(height: 300.0,),
+//              RaisedButton(child: Text('Continue ->'),
+//
+//                onPressed: (){
+//                Navigator.pushNamed(context, LoginPage.id);
+//                },
+//                color: Color(0xff0C1338),
+//                textColor: Colors.white,
+//                highlightColor: Colors.yellow,
+//                hoverColor: Colors.yellow[100],
+//                disabledColor: Color(0xff0C1338),
+//              )
+            RoundedButton(title: 'Continue ->',colour: Color(0xff0C1338), onPressed: (){
                 Navigator.pushNamed(context, LoginPage.id);
-                },
-                color: Colors.yellowAccent,
-                textColor: Colors.black54,
-                highlightColor: Colors.yellow,
-                hoverColor: Colors.yellow[100],
-                disabledColor: Colors.yellowAccent[250],
-              )
+                },)
             ],
           ),
         ),
@@ -45,3 +54,6 @@ class LandingPage extends StatelessWidget {
 
   }
 }
+
+
+//0xffFABD00

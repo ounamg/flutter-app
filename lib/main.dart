@@ -5,9 +5,9 @@ import 'package:truck/screens/signup/sign_up.dart';
 import 'package:truck/screens/signup/signup_manager.dart';
 import 'package:truck/screens/signup/signup_owner.dart';
 import 'package:truck/screens/signup/signup_client.dart';
-import 'package:truck/screens/owner/owner_main.dart';
-import 'package:truck/screens/owner/owner_info.dart';
-import 'package:truck/screens/owner/owner_trucklist.dart';
+//import 'package:truck/screens/owner/owner_main.dart';
+//import 'package:truck/screens/owner/owner_info.dart';
+//import 'package:truck/screens/owner/owner_trucklist.dart';
 //import 'package:truck/trial.dart';
 void main() {
   runApp(MyApp());
@@ -19,7 +19,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'CrimsonText',),
+      theme: ThemeData(fontFamily: 'CrimsonText',bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(10))
+    )),),
       home: LandingPage(),
       initialRoute: LandingPage.id,
       routes: {
@@ -29,8 +33,8 @@ class MyApp extends StatelessWidget {
         OwnerSignUp.id:(context) => OwnerSignUp(),
         ManagerSignUp.id:(context) => ManagerSignUp(),
         ClientSignUp.id:(context) => ClientSignUp(),
-        OwnerMain.id:(context) => OwnerMain(),
-        OwnerInfo.id:(context) => OwnerInfo(),
+//        OwnerMain.id:(context) => OwnerMain(),
+//        OwnerInfo.id:(context) => OwnerInfo(),
 //        AppTrial.id:(context) => AppTrial(),
       },
     );

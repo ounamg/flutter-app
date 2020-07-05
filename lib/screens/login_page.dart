@@ -86,10 +86,13 @@ class _LoginPageState extends State<LoginPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.yellowAccent[200],
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Login',style: kAppBarText,),
-          backgroundColor: Colors.black38,
+          title: Text('Login', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),
+          ),
+          backgroundColor: Color(0xff0C1338),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -97,8 +100,8 @@ class _LoginPageState extends State<LoginPage> {
             Hero(
               tag: 'logo',
               child: Container(
-                height: 150.0,
-                child: Image.asset('images/logo1.png'),
+                height: 180.0,
+                child: Image.asset('images/logo1.png',),
               ),
             ),
             SizedBox(

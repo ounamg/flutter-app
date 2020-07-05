@@ -27,33 +27,34 @@ class _RoundedDropDownState extends State<RoundedDropDown> {
       dropDownItems.add(newItem);
     }
     return DropdownButton<String>(
-      value: selectedMode,
-      iconEnabledColor: Colors.redAccent,
-      iconDisabledColor: Colors.redAccent,
-      items: dropDownItems,
+          value: selectedMode,
+          iconEnabledColor: Color(0xff0C1338),
+          iconDisabledColor: Colors.redAccent,
+          items: dropDownItems,
 //      isDense: true,
-      isExpanded: true,
-      icon: Icon(Icons.list),
-      dropdownColor: Colors.white,
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: 20.0,
-      ),
-      onChanged: (value) {
-        setState(() {
-          selectedMode = value;
-          if(selectedMode=='Owner'){
-            widget.tableName= 'login_owner';
-          }else if(selectedMode=='Manager'){
-            widget.tableName= 'login_manager';
-          }else{
-            widget.tableName= 'login_client';
-          }
-          widget.table(widget.tableName);
+          isExpanded: true,
+          icon: Icon(Icons.list),
+          dropdownColor: Colors.white,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+          ),
+          onChanged: (value) {
+            setState(() {
+              selectedMode = value;
+              if(selectedMode=='Owner'){
+                widget.tableName= 'login_owner';
+              }else if(selectedMode=='Manager'){
+                widget.tableName= 'login_manager';
+              }else{
+                widget.tableName= 'login_client';
+              }
+              widget.table(widget.tableName);
 
-        });
-      },
-    );
+            });
+          },
+        );
+
   }
 
   CupertinoPicker iOSPicker() {
@@ -76,8 +77,18 @@ class _RoundedDropDownState extends State<RoundedDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return Platform.isIOS ? iOSPicker() : androidDropdown();
+    return Container(
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 1.0, style: BorderStyle.solid),
+            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(top: 5.0, bottom: 5.0, right: 20.0, left: 20.0),
+        child: Platform.isIOS ? iOSPicker() : androidDropdown()));
   }
 }
+
 
 
