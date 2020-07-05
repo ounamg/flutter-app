@@ -29,7 +29,7 @@ class LandingPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 50.0,),
-              Text('Welcome to the one and only Whore Finder App'),
+              Text('Welcome to the one and only app'),
               SizedBox(height: 300.0,),
 //              RaisedButton(child: Text('Continue ->'),
 //

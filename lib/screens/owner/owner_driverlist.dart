@@ -2,101 +2,118 @@ import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
 
-void main() => runApp(new MaterialApp(home: OwnerDriverList()));
-
 class OwnerDriverList extends StatefulWidget {
-  static String id = 'MyList';
+//  static String id = 'MyList';
   @override
   _OwnerDriverListState createState() => _OwnerDriverListState();
 }
 
-int cid = 1001;
-
 class _OwnerDriverListState extends State<OwnerDriverList> {
+
+  int cid = 1001;
+  bool _isLoading = true;
+  List titleColumn;
+  List data=[];
+
   List<int> driverLid = [];
   List<String> name = [];
   List<int> aadharNumber = [];
-  List<String> licenseNumber = [];
-  List<String> licenseExpiry = [];
+  List<int> licenseNumber = [];
   List<int> contactNumber = [];
+  List result2=[];
 
-  Future setDriverDetails() async {
-    final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: 'mysql5021.site4now.net',
-        port: 3306,
-        user: 'a5e6d1_demo102',
-        db: 'db_a5e6d1_demo102',
-        password: 'Admin@123#'));
-    var result1 = await conn.query(
-        "select driver_lid,name, aadhar_number,license_number, license_expiry,contact_number, address_number, address_area, city,state, truck_number,manager_lid from driver where owner_lid=$cid");
-    for (var row in result1) {
-      driverLid = row[0];
-      name = row[1];
-      aadharNumber = row[2];
-      licenseNumber = row[3];
-      licenseExpiry = row[4];
-      contactNumber = row[5];
-
-    }
-    await conn.close();
-  }
-
-  int columns = 7;
-  int rows = 3;
-  List<List<String>> _makeData() {
-    List<List<String>> output = [];
-    for (int i = 0; i < columns; i++) {
-      List<String> row = [];
-      for (int j = 0; j < rows; j++) {
-        row.add('$i:$j');
-      }
-      output.add(row);
-    }
-    return output;
-  }
 
   List<String> _makeTitleColumn() => [
     'driver_lid',
-    'name',
     'aadhar_number',
     'license_number',
-    'license_expiry',
     'contact_number',
   ];
 
-  /// Simple generator for row title
-  List<String> _makeTitleRow() => List.generate(rows, (i) => '$i');
+  int columns = 4;
+  int rows = 2;
 
-  var titleColumn;
-  var titleRow;
-  var data;
+  var finalRes;
+  Future setDriverDetails() async {
+    final conn = await MySqlConnection.connect(ConnectionSettings(
+        host: '10.0.2.2',
+        port: 3306,
+        user: 'root',
+        db: 'logistic',
+        password: 'Ati@radeon1'));
+//        host: 'mysql5021.site4now.net',
+//        port: 3306,
+//        user: 'a5e6d1_demo102',
+//        db: 'db_a5e6d1_demo102',
+//        password: 'Admin@123#'));
+    var result1 = await conn.query(
+        "select driver_lid,name, aadhar_number,license_number,contact_number from drivers where owner_lid=$cid");
+    finalRes=result1;
+    for (var row in result1) {
+      driverLid.add(row[0]);
+      print(row[0]);
+      name.add(row[1]);
+      aadharNumber.add(row[2]);
+      licenseNumber.add(row[3]);
+      contactNumber.add(row[4]);
+    }
+    titleColumn= _makeTitleColumn();
+    result2= getData(columns, rows);
+    await conn.close();
+  }
+
+  getData(columns,rows){
+    for(int i=0; i<rows; i++){
+      for(int j=0; j<columns; j++){
+        if(j==0){
+          data.add(driverLid);
+        }else if(j==1){
+          data.add(aadharNumber);
+        }else if(j==2){
+            data.add(licenseNumber);
+          }else if(j==3){
+          data.add(contactNumber);
+        }
+        }
+      }setState(() {
+      _isLoading = false;
+    });
+    return data;
+    }
+
   @override
   void initState() {
     super.initState();
     setDriverDetails();
-    titleColumn= _makeTitleColumn();
-    titleRow= _makeTitleRow();
-    data= _makeData();
   }
 
   @override
-
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Sticky Headers Two-Dimension  Table'),
-          backgroundColor: Colors.amber,
-        ),
-        body: StickyHeadersTable(
-          columnsLength: titleColumn.length,
-          rowsLength: titleRow.length,
-          columnsTitleBuilder: (i) => Text(titleColumn[i]),
-          rowsTitleBuilder: (i) => Text(titleRow[i]),
-          contentCellBuilder: (i, j) => Text(data[i][j]),
-          legendCell: Text('Sticky Legend'),
-        ),
-      ),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Driver List'),
+            backgroundColor: Colors.amber,
+          ),
+          body: Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: _isLoading
+                ? Center(
+              child: CircularProgressIndicator(),
+            )
+                :StickyHeadersTable(
+              columnsLength: titleColumn.length,
+              rowsLength: 2,
+              columnsTitleBuilder: (i) => Text(titleColumn[i]),
+              rowsTitleBuilder: (i) => Text(name[i]),
+              contentCellBuilder: (i, j) => Text('${result2[i][j]}'),
+              legendCell: Text('Name'),
+            ),
+          ),
+        )
     );
   }
 }
