@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
+import 'package:truck/constants.dart';
 
 class OwnerDriverList extends StatefulWidget {
 //  static String id = 'MyList';
@@ -24,10 +25,10 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
 
 
   List<String> _makeTitleColumn() => [
-    'driver_lid',
-    'aadhar_number',
-    'license_number',
-    'contact_number',
+    'Id',
+    'Aadhar',
+    'License No.',
+    'Mobile No.',
   ];
 
   int columns = 4;
@@ -91,9 +92,66 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
+          drawer: ClipRRect(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
+            child: Drawer(
+
+              child: ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  Container(
+                    color: Color(0xff0C1338),
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.all(10.0,),
+                    child: DrawerHeader(
+                      child: CircleAvatar(
+                        child: Text('OG',style: kDrawerText,),
+
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    dense: false,
+
+                    title: Text('Logout',style: kDrawerText,),
+                    onTap: () {
+
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Help',style: kDrawerText,),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Language',style: kDrawerText,),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Settings',style: kDrawerText,),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
           appBar: AppBar(
-            title: Text('Driver List'),
-            backgroundColor: Colors.amber,
+            title: Text('Driver List', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
+            actions: <Widget>[FlatButton(child: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){Navigator.pop(context);})],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),
+            ),
+            backgroundColor: Color(0xff0C1338),
           ),
           body: Container(
             height: MediaQuery.of(context).size.height,
@@ -107,13 +165,129 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
                 :StickyHeadersTable(
               columnsLength: titleColumn.length,
               rowsLength: 2,
-              columnsTitleBuilder: (i) => Text(titleColumn[i]),
-              rowsTitleBuilder: (i) => Text(name[i]),
-              contentCellBuilder: (i, j) => Text('${result2[i][j]}'),
-              legendCell: Text('Name'),
+              cellDimensions: CellDimensions(contentCellHeight: 50.0,contentCellWidth: 100.0,stickyLegendHeight: 50.0, stickyLegendWidth: 150.0),
+              columnsTitleBuilder: (i) => TableCell.stickyRow(titleColumn[i], textStyle: kDrawerText,),
+              rowsTitleBuilder: (i) => TableCell.stickyRow(name[i],textStyle: kDrawerText,),
+              contentCellBuilder: (i, j) => TableCell.content('${result2[i][j]}',textStyle: kDrawerText,),
+              legendCell: TableCell.legend('Name',textStyle: kDrawerText,),
             ),
           ),
         )
+    );
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+class TableCell extends StatelessWidget {
+  TableCell.content(
+      this.text, {
+        this.textStyle,
+        this.cellDimensions = CellDimensions.base,
+        this.colorBg = Colors.white,
+        this.onTap,
+      })  : cellWidth = cellDimensions.contentCellWidth,
+        cellHeight = cellDimensions.contentCellHeight,
+        _colorHorizontalBorder = Colors.amber,
+        _colorVerticalBorder = Colors.black38,
+        _textAlign = TextAlign.center,
+        _padding = EdgeInsets.zero;
+
+  TableCell.legend(
+      this.text, {
+        this.textStyle,
+        this.cellDimensions = CellDimensions.base,
+        this.colorBg = Colors.white,
+        this.onTap,
+      })  : cellWidth = cellDimensions.stickyLegendWidth,
+        cellHeight = cellDimensions.stickyLegendHeight,
+        _colorHorizontalBorder = Colors.white,
+        _colorVerticalBorder = Colors.amber,
+        _textAlign = TextAlign.start,
+        _padding = EdgeInsets.only(left: 24.0);
+
+  TableCell.stickyRow(
+      this.text, {
+        this.textStyle,
+        this.cellDimensions = CellDimensions.base,
+        this.colorBg = Colors.white,
+        this.onTap,
+      })  : cellWidth = cellDimensions.contentCellWidth,
+        cellHeight = cellDimensions.stickyLegendHeight,
+        _colorHorizontalBorder = Colors.white,
+        _colorVerticalBorder = Colors.amber,
+        _textAlign = TextAlign.center,
+        _padding = EdgeInsets.zero;
+
+  TableCell.stickyColumn(
+      this.text, {
+        this.textStyle,
+        this.cellDimensions = CellDimensions.base,
+        this.colorBg = Colors.white,
+        this.onTap,
+      })  : cellWidth = cellDimensions.stickyLegendWidth,
+        cellHeight = cellDimensions.contentCellHeight,
+        _colorHorizontalBorder = Colors.amber,
+        _colorVerticalBorder = Colors.black38,
+        _textAlign = TextAlign.start,
+        _padding = EdgeInsets.only(left: 24.0);
+
+  final CellDimensions cellDimensions;
+
+  final String text;
+  final Function onTap;
+
+  final double cellWidth;
+  final double cellHeight;
+
+  final Color colorBg;
+  final Color _colorHorizontalBorder;
+  final Color _colorVerticalBorder;
+
+  final TextAlign _textAlign;
+  final EdgeInsets _padding;
+
+  final TextStyle textStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: cellWidth,
+        height: cellHeight,
+        padding: _padding,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: 2.0),
+                child: Text(
+                  text,
+                  style: textStyle,
+                  maxLines: 2,
+                  textAlign: _textAlign,
+                ),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              height: 1.1,
+              color: _colorVerticalBorder,
+            ),
+          ],
+        ),
+        decoration: BoxDecoration(
+            border: Border(
+              left: BorderSide(color: _colorHorizontalBorder),
+              right: BorderSide(color: _colorHorizontalBorder),
+            ),
+            color: colorBg),
+      ),
     );
   }
 }
