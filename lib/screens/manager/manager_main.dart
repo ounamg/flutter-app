@@ -8,14 +8,15 @@ import 'package:truck/screens/owner/owner_managerlist.dart';
 import 'package:truck/screens/owner/owner_trucklist.dart';
 import 'package:mysql1/mysql1.dart';
 
-class OwnerMain extends StatefulWidget {
+class ManagerMain extends StatefulWidget {
+  static String id = 'OwnerMain';
   final int idGetter;
-  OwnerMain({Key key,@required this.idGetter}): super(key: key);
+  ManagerMain({Key key,@required this.idGetter}): super(key: key);
   @override
-  _OwnerMainState createState() => _OwnerMainState();
+  _ManagerMainState createState() => _ManagerMainState();
 }
 
-class _OwnerMainState extends State<OwnerMain> {
+class _ManagerMainState extends State<ManagerMain> {
   String name;
   int lid;
   bool isLoading = true;
@@ -32,7 +33,7 @@ class _OwnerMainState extends State<OwnerMain> {
 //        user: 'a5e6d1_demo102',
 //        db: 'db_a5e6d1_demo102',
 //        password: 'Admin@123#'));
-    var result1= await conn.query('SELECT name FROM owner_personal where lid=$lid');
+    var result1= await conn.query('SELECT name FROM manager_personal where lid=$lid');
 
     for (var row in result1) {
       name = row[0];
@@ -71,7 +72,7 @@ class _OwnerMainState extends State<OwnerMain> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),
             ),
-            backgroundColor: Color(0xff0C1338),
+            backgroundColor: Color(0xff0C1332),
           ),
           body: Container(
               height: MediaQuery.of(context).size.height,
@@ -137,35 +138,35 @@ class _OwnerMainState extends State<OwnerMain> {
                         ),
                       ),
                       Card(
-                        color: Color(0xffF2F4F7),
-                        child: ListTile(
-                          leading: Icon(Icons.person_add,size: 56.0,color: Colors.black87,),
-                          title: Text('Assistance'),
-                          subtitle: Text('Hired Assistants'),
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return OwnerAssistantsList();
-                              },
-                            ),
-                            );
-                          }
-                         )
-                       ),
+                          color: Color(0xffF2F4F7),
+                          child: ListTile(
+                              leading: Icon(Icons.person_add,size: 56.0,color: Colors.black87,),
+                              title: Text('Assistance'),
+                              subtitle: Text('Hired Assistants'),
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return OwnerAssistantsList();
+                                  },
+                                ),
+                                );
+                              }
+                          )
+                      ),
                       Card(
                         color: Color(0xffF2F4F7),
                         child: ListTile(
-                          leading: Icon(Icons.person_pin_circle,size: 56.0,color: Colors.black87,),
-                          title: Text('Managers'),
-                          subtitle: Text('Appointed Managers'),
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return OwnerManagerList();
-                              },
-                            ),
-                            );
-                          }
+                            leading: Icon(Icons.person_pin_circle,size: 56.0,color: Colors.black87,),
+                            title: Text('Managers'),
+                            subtitle: Text('Appointed Managers'),
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return OwnerManagerList();
+                                },
+                              ),
+                              );
+                            }
                         ),
                       ),
                       Card(

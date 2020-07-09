@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:truck/button/rounded_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:truck/constants.dart';
 import 'package:truck/button/dropdownbutton_login.dart';
+import 'package:truck/screens/manager/manager_main.dart';
 import '../screens/signup/sign_up.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:truck/screens/owner/owner_main.dart';
@@ -16,7 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _isLoading = false;
+  bool _isLoading = true;
   String cid;
   int pid = 1001;
 
@@ -25,12 +28,13 @@ class _LoginPageState extends State<LoginPage> {
   String newTableName;
   int newId;
   var newPass;
+  bool correct;
 
   TextEditingController idController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
+  void _showMyDialog(String text) async {
+    return showDialog(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
@@ -39,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Incorrect Id or password.'),
+                Text(text),
               ],
             ),
           ),
@@ -58,7 +62,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Future databaseEntry() async {
 
-
     final conn = await MySqlConnection.connect(ConnectionSettings(
         host: 'mysql5021.site4now.net',
         port: 3306,
@@ -70,19 +73,51 @@ class _LoginPageState extends State<LoginPage> {
 //        user: 'a5e6d1_demo102',
 //        db: 'db_a5e6d1_demo102',
 //        password: 'Admin@123#'));
+    try {
     var results = await conn
         .query('select lid, password from $newTableName where lid = $cid');
     for (var row in results) {
       newId = row[0];
       newPass = row[1];
-
     }
+
+      switch (newTableName){
+        case 'login_owner' : {
+          if (newId == int.parse(cid) && newPass == password) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return OwnerMain(idGetter: pid,);},));
+          }
+          else {
+            _showMyDialog('Incorrect Id or Password.');
+          }
+          break;
+        }
+        case 'login_manager' :{
+          if (newId == int.parse(cid) && newPass == password) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ManagerMain(idGetter: newId,);},));
+          }
+        }
+        break;
+      }
+    }catch (e){
+      print(e);
+      _showMyDialog('Invalid Mode selected');
+    }
+
+
     await conn.close();
   }
   void table(String tableName) {
-    newTableName= tableName;
+      newTableName= tableName;
+      print(newTableName);
+//    return newTableName;
   }
-
+//  @override
+//  void dispose() {
+//    // TODO: implement dispose
+//    super.dispose();
+//  }
   @override
   Widget build(BuildContext context) {
 
@@ -161,22 +196,11 @@ class _LoginPageState extends State<LoginPage> {
               RoundedButton(
                 title: 'Log In',
                 colour: Colors.black87,
-                onPressed: () async {
+                onPressed: () {
                   databaseEntry();
-                  setState(() {
-                    _isLoading = true;
-                    String table1 = newTableName;
-                  });
-                  if (newId == int.parse(cid) && newPass == password) {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return OwnerMain(idGetter: pid,);
-                    },
-                    )
-                    );
-                  }
-                  else {
-                    _showMyDialog();
-                  }
+//                  setState(() {
+//                    _isLoading = false;
+//                  });
                 }
                 ),
               SizedBox(

@@ -11,6 +11,7 @@ class LandingPage extends StatelessWidget {
 
       home: Scaffold(
         backgroundColor: Colors.white,
+        resizeToAvoidBottomPadding: false,
         body: SafeArea(
         child: Center(
           child: Column(
