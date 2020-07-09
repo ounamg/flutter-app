@@ -27,3 +27,5 @@ const kDrawerText = TextStyle(
 const kAppBarText = TextStyle(
     color: Colors.white, fontStyle: FontStyle.italic
 );
+
+const kAppBarStyle = TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0);

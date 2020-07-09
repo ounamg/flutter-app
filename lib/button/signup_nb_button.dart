@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignUpBackButton extends StatelessWidget {
@@ -10,6 +11,7 @@ class SignUpBackButton extends StatelessWidget {
       padding: const EdgeInsets.all(3.0),
       child: RaisedButton(
           child: Text('Back',style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),),
+
           onPressed: backButton
       ),
     );

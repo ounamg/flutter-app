@@ -3,6 +3,7 @@ import 'package:truck/button/signup_nb_button.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:truck/screens/login_page.dart';
 import 'package:http/http.dart' as http;
+import 'package:truck/button/drawer_snippet.dart';
 
 class ClientSignUp extends StatefulWidget {
   static String id = 'ClientSignUp';
@@ -160,20 +161,16 @@ class _ClientSignUpState extends State<ClientSignUp> {
         child: Scaffold(
           resizeToAvoidBottomPadding: true,
           backgroundColor: Colors.white,
-          floatingActionButton: Visibility(
-            visible: visibleMeter(),
-            child: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {},
-            ),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation
-              .centerFloat,
+          drawer: DrawerSnippet(),
           appBar: AppBar(
-            title: Text('Client Sign Up Page'),
-            backgroundColor: Colors.blue,),
+            title: Text('Client Sign Up Page', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
+            actions: <Widget>[FlatButton(child: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){Navigator.pop(context);})],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),
+            ),
+            backgroundColor: Color(0xff0C1338),),
           body: Stepper(
-            type: StepperType.horizontal,
+            type: StepperType.vertical,
             currentStep: _currentStep,
             onStepTapped: (int step) => setState(() => _currentStep = step),
             onStepContinue: _currentStep < 2 ? () =>
@@ -183,14 +180,17 @@ class _ClientSignUpState extends State<ClientSignUp> {
                 setState(() => Navigator.pop(context)),
             controlsBuilder: (BuildContext context,
                 {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-              return Wrap(
-                children: <Widget>[
-                  SizedBox(height: 70.0),
-                  NextButton(
-                    continueButton: onStepContinue,
-                  ),
-                  SignUpBackButton(backButton: onStepCancel,),
-                ],
+              return Container(
+                  alignment: Alignment.bottomRight,
+                  child: Wrap(
+                    children: <Widget>[
+                      SizedBox(height: 70.0),
+                      NextButton(
+                        continueButton: onStepContinue,
+                      ),
+                      SignUpBackButton(backButton: onStepCancel,),
+                    ],
+                  )
               );
             },
             steps: <Step>

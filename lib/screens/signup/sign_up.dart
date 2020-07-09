@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:truck/screens/signup/signup_owner.dart';
 import 'package:truck/screens/signup/signup_manager.dart';
 import 'package:truck/screens/signup/signup_client.dart';
-
-
+import 'package:truck/button/drawer_snippet.dart';
 //import 'package:truck/constants.dart';
 
 class SignUp extends StatefulWidget {
@@ -18,7 +17,17 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.yellowAccent[200],
+        resizeToAvoidBottomPadding: false,
+        drawer: DrawerSnippet(),
+        appBar: AppBar(
+          title: Text('SignUp', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
+          actions: <Widget>[FlatButton(child: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){Navigator.pop(context);})],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),
+          ),
+          backgroundColor: Color(0xff0C1338),
+        ),
+        backgroundColor: Colors.white,
         body: Center(
           child: Column(
 //            crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,13 +61,17 @@ class _SignUpState extends State<SignUp> {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Card(
-                  color: Colors.white,
+                  color: Color(0xffF2F4F7),
                   child: ListTile(
                     leading: Icon(Icons.local_shipping,size: 56.0,color: Colors.black87,),
                     title: Text('Owner'),
                     subtitle: Text('Transporter Giants'),
                     onTap: (){
-                      Navigator.pushNamed(context, OwnerSignUp.id);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return OwnerSignUp();
+                      },
+                      ),
+                      );
                     },
                   ),
                 ),
@@ -66,13 +79,17 @@ class _SignUpState extends State<SignUp> {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Card(
-                  color: Colors.white,
+                  color: Color(0xffF2F4F7),
                   child: ListTile(
                     leading: Icon(Icons.account_circle,size: 56.0,color: Colors.black87,),
                     title: Text('Client'),
                     subtitle: Text('Customers with Load/Consignment'),
                     onTap: (){
-                      Navigator.pushNamed(context, ClientSignUp.id);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return ClientSignUp();
+                      },
+                      ),
+                      );
                     },
                   ),
                 ),
@@ -80,17 +97,21 @@ class _SignUpState extends State<SignUp> {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Card(
-                  color: Colors.white,
+                  color: Color(0xffF2F4F7),
                   child: ListTile(
                     leading: Icon(Icons.content_paste,size: 56.0,color: Colors.black87,),
                     title: Text('Manager'),
                     subtitle: Text('Direct Truck handlers'),
                     onTap: (){
-                      Navigator.pushNamed(context, ManagerSignUp.id);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return ManagerSignUp();
                     },
                   ),
-                ),
+                );
+              },
               ),
+                )
+              )
             ],
           ),
         ),

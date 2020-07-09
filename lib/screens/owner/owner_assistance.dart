@@ -3,23 +3,24 @@ import 'package:mysql1/mysql1.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
 import 'package:truck/constants.dart';
 
-class OwnerDriverList extends StatefulWidget {
+class OwnerAssistantsList extends StatefulWidget {
   @override
-  _OwnerDriverListState createState() => _OwnerDriverListState();
+  _OwnerAssistantsListState createState() => _OwnerAssistantsListState();
 }
 
-class _OwnerDriverListState extends State<OwnerDriverList> {
+class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
 
   int cid = 1001;
   bool _isLoading = true;
   List titleColumn;
   List data=[];
 
-  List<int> driverLid = [];
+  List<int> assistantLid = [];
   List<String> name = [];
   List<int> aadharNumber = [];
   List<int> licenseNumber = [];
   List<int> contactNumber = [];
+  List<int> driverLid = [];
   List result2=[];
 
 
@@ -28,9 +29,10 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
     'Aadhar',
     'License No.',
     'Mobile No.',
+    'Driver Id',
   ];
 
-  int columns = 4;
+  int columns = 5;
   int rows = 2;
 
   var finalRes;
@@ -47,15 +49,15 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
 //        db: 'db_a5e6d1_demo102',
 //        password: 'Admin@123#'));
     var result1 = await conn.query(
-        "select driver_lid,name, aadhar_number,license_number,contact_number from drivers where owner_lid=$cid");
+        "select assistant_lid,name,aadhar_number,license_number,contact_number,driver_lid from assistants where owner_lid=$cid");
     finalRes=result1;
     for (var row in result1) {
-      driverLid.add(row[0]);
-      print(row[0]);
+      assistantLid.add(row[0]);
       name.add(row[1]);
       aadharNumber.add(row[2]);
       licenseNumber.add(row[3]);
       contactNumber.add(row[4]);
+      driverLid.add(row[5]);
     }
     titleColumn= _makeTitleColumn();
     result2= getData(columns, rows);
@@ -66,13 +68,15 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
     for(int i=0; i<rows; i++){
       for(int j=0; j<columns; j++){
         if(j==0){
-          data.add(driverLid);
+          data.add(assistantLid);
         }else if(j==1){
           data.add(aadharNumber);
         }else if(j==2){
           data.add(licenseNumber);
         }else if(j==3){
           data.add(contactNumber);
+        }else if(j==4){
+          data.add(driverLid);
         }
       }
     }setState(() {
@@ -145,7 +149,7 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
             ),
           ),
           appBar: AppBar(
-            title: Text('Driver List', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
+            title: Text('Assistant List', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
             actions: <Widget>[FlatButton(child: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){Navigator.pop(context);})],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),
@@ -190,8 +194,8 @@ class TableCell extends StatelessWidget {
         this.onTap,
       })  : cellWidth = 200,
         cellHeight = 100,
-        cellMargin=50,
-        cellSpacing=10.0,
+//        cellMargin=50,
+//        cellSpacing=10.0,
         _colorHorizontalBorder = Colors.grey,
         _colorVerticalBorder = Colors.grey,
         _textAlign = TextAlign.center,
@@ -205,8 +209,8 @@ class TableCell extends StatelessWidget {
         this.onTap,
       })  : cellWidth = 200,
         cellHeight = 100,
-        cellMargin=50,
-        cellSpacing=10.0,
+//        cellMargin=50,
+//        cellSpacing=10.0,
         _colorHorizontalBorder = Colors.grey,
         _colorVerticalBorder = Colors.grey,
         _textAlign = TextAlign.start,
@@ -220,8 +224,8 @@ class TableCell extends StatelessWidget {
         this.onTap,
       })  : cellWidth = 200,
         cellHeight = 100,
-        cellMargin= 50,
-        cellSpacing=10.0,
+//        cellMargin= 50,
+//        cellSpacing=10.0,
         _colorHorizontalBorder = Colors.grey,
         _colorVerticalBorder = Colors.grey,
         _textAlign = TextAlign.center,
@@ -235,8 +239,8 @@ class TableCell extends StatelessWidget {
         this.onTap,
       })  : cellWidth = 200,
         cellHeight = 100,
-        cellMargin=50.0,
-        cellSpacing=10.0,
+//        cellMargin=50.0,
+//        cellSpacing=10.0,
         _colorHorizontalBorder = Colors.grey,
         _colorVerticalBorder = Colors.grey,
         _textAlign = TextAlign.start,
@@ -249,8 +253,8 @@ class TableCell extends StatelessWidget {
 
   final double cellWidth;
   final double cellHeight;
-  final double cellMargin;
-  final double cellSpacing;
+//  final double cellMargin;
+//  final double cellSpacing;
 
   final Color colorBg;
   final Color _colorHorizontalBorder;

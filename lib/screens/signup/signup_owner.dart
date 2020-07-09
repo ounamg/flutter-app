@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:truck/button/signup_nb_button.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:truck/screens/login_page.dart';
+import 'package:truck/button/drawer_snippet.dart';
 
 class OwnerSignUp extends StatefulWidget {
   static String id = 'OwnerSignUp';
@@ -43,7 +44,6 @@ class _OwnerSignUpState extends State<OwnerSignUp> {
       newId = row[0];
       newId++;
       cid = newId;
-//      print('2: $cid');
     }
     await conn.close();
   }
@@ -64,7 +64,6 @@ class _OwnerSignUpState extends State<OwnerSignUp> {
     }
     await conn.close();
   }
-
 
   Future databaseEntry() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
@@ -92,7 +91,6 @@ class _OwnerSignUpState extends State<OwnerSignUp> {
           officeEmail,
           cid
         ]);
-//
     var result3 = await conn.query(
         'insert into login_owner (lid, password) values (?,?)',
         [cid, password]);
@@ -112,14 +110,6 @@ class _OwnerSignUpState extends State<OwnerSignUp> {
       return false;
     }
   }
-
-//  String validator(value){
-//    var numValue = int.tryParse(value);
-//    if(numValue >= 5 && numValue < 100) {
-//      return null;
-//    }
-//    return 'Inavlid Format';
-//  }
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -155,20 +145,16 @@ class _OwnerSignUpState extends State<OwnerSignUp> {
       child: Scaffold(
         resizeToAvoidBottomPadding: true,
         backgroundColor: Colors.white,
-        floatingActionButton: Visibility(
-          visible: visibleMeter(),
-          child: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () {},
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation
-            .centerFloat,
+        drawer: DrawerSnippet(),
         appBar: AppBar(
-          title: Text('Client Sign Up Page'),
-          backgroundColor: Colors.blue,),
+          title: Text('Owner Sign Up Page' ,style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
+        actions: <Widget>[FlatButton(child: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){Navigator.pop(context);})],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),
+        ),
+        backgroundColor: Color(0xff0C1338),),
         body: Stepper(
-          type: StepperType.horizontal,
+          type: StepperType.vertical,
           currentStep: _currentStep,
           onStepTapped: (int step) => setState(() => _currentStep = step),
           onStepContinue: _currentStep < 2 ? () =>
@@ -178,7 +164,9 @@ class _OwnerSignUpState extends State<OwnerSignUp> {
               setState(() => Navigator.pop(context)),
           controlsBuilder: (BuildContext context,
               {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-            return Wrap(
+            return Container(
+              alignment: Alignment.bottomRight,
+              child: Wrap(
               children: <Widget>[
                 SizedBox(height: 70.0),
                 NextButton(
@@ -186,12 +174,13 @@ class _OwnerSignUpState extends State<OwnerSignUp> {
                 ),
                 SignUpBackButton(backButton: onStepCancel,),
               ],
+              )
             );
           },
           steps: <Step>
           [
             Step(
-//STEP1CONTINUE!
+//STEP 1
               title: Text('Personal Details'),
               isActive: _currentStep >= 0,
               state: _currentStep >= 0 ? StepState.complete : StepState
@@ -329,149 +318,5 @@ class _OwnerSignUpState extends State<OwnerSignUp> {
     );
   }
 }
-//  static int _currentStep = 0;
-//  bool visibleMeter(){
-//    if(_currentStep == 2){
-//      return true;
-//    }
-//    else{
-//      return false;
-//    }
-//  }
-//  @override
-//  Widget build(BuildContext context) {
-//    return MaterialApp(
-//      debugShowCheckedModeBanner: false,
-//      home: SafeArea(
-//        child: Scaffold(
-//          backgroundColor: Colors.white,
-//          floatingActionButton: Visibility(
-//            visible: visibleMeter(),
-//            child: FloatingActionButton(
-//              child: Icon(Icons.add),
-//              onPressed: (){},
-//            ),
-//          ),
-//          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-//          appBar: AppBar(
-//            title: Text('Owner Sign Up Page'),
-//            backgroundColor: Colors.blue,),
-//          body: Stepper(
-//            type: StepperType.horizontal,
-//            currentStep: _currentStep,
-//            onStepTapped: (int step) => setState(() => _currentStep = step),
-//            onStepContinue: _currentStep < 2 ? () => setState(() => _currentStep += 1) : null,
-//            onStepCancel: _currentStep > 0 ? () => setState(() => _currentStep -= 1) : null,
-//            controlsBuilder: (BuildContext context,
-//                {VoidCallback onStepContinue, VoidCallback onStepCancel}){
-//              return Row(
-//                children: <Widget>[
-//                  SizedBox(height: 70.0),
-//                  NextButton(continueButton: onStepContinue,),
-//                  SignUpBackButton(backButton: onStepCancel,),
-//                ],
-//              );
-//            },
-//            steps: <Step>
-//            [
-//              Step(
-//                // STEP1
-//                title: Text('Personal Details'),
-//                isActive: _currentStep >= 0,
-//                state: _currentStep >= 0 ? StepState.complete : StepState.editing,
-//                content: Column(
-//                  children: <Widget>[
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Name'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Mobile Number'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Alternate Mobile Number'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Email Id'),
-//                    ),
-////                  TextFormField(
-////                    decoration: InputDecoration(labelText: 'Aadhar Id'),
-////                  ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Address Line 1'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Address Line 2'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'City'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'State'),
-//                    ),
-//                  ],
-//                ),
-//              ),
-//              Step(
-//                //STEP 2
-//                title: const Text('Company Details'),
-//                isActive: _currentStep >= 0,
-//                state: _currentStep >= 1 ? StepState.complete : StepState.editing,
-//                content: Column(
-//                  children: <Widget>[
-//                    Text('Company Details',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Company Name'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Company Registration Number'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Office Mobile Number'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Office Email-Address'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Address Line 1'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Address Line 2'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'City'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'State'),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Pincode'),
-//                    ),
-//                  ],
-//                ),
-//              ),
-//              Step(
-//                //STEP3
-//                title: Text('Generate Id'),
-//                isActive: _currentStep >= 0,
-//                state: _currentStep >= 2 ? StepState.complete : StepState.editing,
-//                content: Column(
-//                  children: <Widget>[
-//                    Text('Generate Login Details',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),),
-//                    FlatButton(
-//                      child: Text('Generate Email Id', style: TextStyle(decoration: TextDecoration.underline), textAlign: TextAlign.start,),
-//                    ),
-//                    TextFormField(
-//                      decoration: InputDecoration(labelText: 'Enter Password'),
-//                    ),
-//
-//                  ],
-//                ),
-//              ),
-//            ],
-//          ),
-//        ),
-//      ),
-//    );
-//  }
-//  }
+
 

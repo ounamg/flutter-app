@@ -6,8 +6,10 @@ import 'package:truck/button/dropdownbutton_login.dart';
 import '../screens/signup/sign_up.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:truck/screens/owner/owner_main.dart';
+import 'package:truck/button/drawer_snippet.dart';
 
 class LoginPage extends StatefulWidget {
+
   static String id = 'LoginPage';
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -21,7 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   String password;
   String tableName;
   String newTableName;
-
+  int newId;
+  var newPass;
 
   TextEditingController idController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -36,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Id and password do not match.'),
+                Text('Incorrect Id or password.'),
               ],
             ),
           ),
@@ -54,8 +57,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future databaseEntry() async {
-    int newId;
-    var newPass;
+
 
     final conn = await MySqlConnection.connect(ConnectionSettings(
         host: 'mysql5021.site4now.net',
@@ -73,12 +75,7 @@ class _LoginPageState extends State<LoginPage> {
     for (var row in results) {
       newId = row[0];
       newPass = row[1];
-      if (newId == int.parse(cid) && newPass == password) {
-        print('valid');
-      }
-      else {
-        _showMyDialog();
-      }
+
     }
     await conn.close();
   }
@@ -88,12 +85,15 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.white,
+        drawer: DrawerSnippet(),
         appBar: AppBar(
           title: Text('Login', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
+          actions: <Widget>[FlatButton(child: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){Navigator.pop(context);})],
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),
           ),
@@ -105,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               Hero(
                 tag: 'logo',
+
                 child: Container(
                   height: 180.0,
                   child: Image.asset('images/logo1.png',),
@@ -166,13 +167,18 @@ class _LoginPageState extends State<LoginPage> {
                     _isLoading = true;
                     String table1 = newTableName;
                   });
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return OwnerMain(idGetter: pid,);
-                  },
-                  )
-                  );
+                  if (newId == int.parse(cid) && newPass == password) {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return OwnerMain(idGetter: pid,);
+                    },
+                    )
+                    );
+                  }
+                  else {
+                    _showMyDialog();
+                  }
                 }
-    ),
+                ),
               SizedBox(
                 height: 13.0,
               ),

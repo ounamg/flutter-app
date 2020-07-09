@@ -28,20 +28,15 @@ class LandingPage extends StatelessWidget {
 //              alignment: ,
                 ),
               ),
-              SizedBox(height: 50.0,),
-              Text('Welcome to the one and only app'),
+              SizedBox(height: 30.0,),
+              Text('Logistics made easy',
+              style: TextStyle(
+                color: Color(0xff0C1338),
+                fontFamily: 'Pacifico',
+//                fontStyle: FontStyle.italic,
+                fontSize: 30.0
+              ),),
               SizedBox(height: 300.0,),
-//              RaisedButton(child: Text('Continue ->'),
-//
-//                onPressed: (){
-//                Navigator.pushNamed(context, LoginPage.id);
-//                },
-//                color: Color(0xff0C1338),
-//                textColor: Colors.white,
-//                highlightColor: Colors.yellow,
-//                hoverColor: Colors.yellow[100],
-//                disabledColor: Color(0xff0C1338),
-//              )
             RoundedButton(title: 'Continue ->',colour: Color(0xff0C1338), onPressed: (){
                 Navigator.pushNamed(context, LoginPage.id);
                 },)
