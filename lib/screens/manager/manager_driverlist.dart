@@ -3,24 +3,24 @@ import 'package:mysql1/mysql1.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
 import 'package:truck/constants.dart';
 
-class OwnerAssistantsList extends StatefulWidget {
+class ManagerDriverList extends StatefulWidget {
   @override
-  _OwnerAssistantsListState createState() => _OwnerAssistantsListState();
+  _ManagerDriverListState createState() => _ManagerDriverListState();
 }
 
-class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
+class _ManagerDriverListState extends State<ManagerDriverList> {
 
-  int cid = 1001;
+  int cid = 2001;
   bool _isLoading = true;
   List titleColumn;
   List data=[];
 
-  List<int> assistantLid = [];
+  List<int> driverLid = [];
   List<String> name = [];
   List<int> aadharNumber = [];
   List<int> licenseNumber = [];
   List<int> contactNumber = [];
-  List<int> driverLid = [];
+  List<int> ownerLid = [];
   List result2=[];
 
 
@@ -29,14 +29,14 @@ class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
     'Aadhar',
     'License No.',
     'Mobile No.',
-    'Driver Id',
+    'Owner Id',
   ];
 
-  int columns = 5;
+  int columns =4;
   int rows = 2;
-
   var finalRes;
-  Future setDriverDetails() async {
+
+  Future getDriverDetails() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
         host: '10.0.2.2',
         port: 3306,
@@ -49,15 +49,15 @@ class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
 //        db: 'db_a5e6d1_demo102',
 //        password: 'Admin@123#'));
     var result1 = await conn.query(
-        "select assistant_lid,name,aadhar_number,license_number,contact_number,driver_lid from assistants where owner_lid=$cid");
+        "select driver_lid,name, aadhar_number,license_number,contact_number,owner_lid from drivers where manager_lid=$cid");
     finalRes=result1;
     for (var row in result1) {
-      assistantLid.add(row[0]);
+      driverLid.add(row[0]);
       name.add(row[1]);
       aadharNumber.add(row[2]);
       licenseNumber.add(row[3]);
       contactNumber.add(row[4]);
-      driverLid.add(row[5]);
+      ownerLid.add(row[5]);
     }
     titleColumn= _makeTitleColumn();
     result2= getData(columns, rows);
@@ -68,15 +68,16 @@ class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
     for(int i=0; i<rows; i++){
       for(int j=0; j<columns; j++){
         if(j==0){
-          data.add(assistantLid);
+          data.add(driverLid);
         }else if(j==1){
           data.add(aadharNumber);
         }else if(j==2){
           data.add(licenseNumber);
         }else if(j==3){
           data.add(contactNumber);
-        }else if(j==4){
-          data.add(driverLid);
+        }
+        else if(j==4){
+          data.add(ownerLid);
         }
       }
     }setState(() {
@@ -88,9 +89,8 @@ class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
   @override
   void initState() {
     super.initState();
-    setDriverDetails();
+    getDriverDetails();
   }
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -146,7 +146,7 @@ class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
             ),
           ),
           appBar: AppBar(
-            title: Text('Assistants List', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
+            title: Text('Driver List', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
             actions: <Widget>[FlatButton(child: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){Navigator.pop(context);})],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0),topLeft: Radius.zero,topRight: Radius.zero),

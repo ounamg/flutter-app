@@ -36,11 +36,16 @@ class _ManagerSignUpState extends State<ManagerSignUp> {
 
   Future getLid() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: 'mysql5021.site4now.net',
+        host: '10.0.2.2',
         port: 3306,
-        user: 'a5e6d1_demo102',
-        db: 'db_a5e6d1_demo102',
-        password: 'Admin@123#'));
+        user: 'root',
+        db: 'logistic',
+        password: 'Ati@radeon1'));
+//        host: 'mysql5021.site4now.net',
+//        port: 3306,
+//        user: 'a5e6d1_demo102',
+//        db: 'db_a5e6d1_demo102',
+//        password: 'Admin@123#'));
     var countId = await conn.query('SELECT lid FROM login_manager order by lid DESC LIMIT 1;');
     print(countId);
     for (var row in countId) {
@@ -54,11 +59,16 @@ class _ManagerSignUpState extends State<ManagerSignUp> {
 
   Future getCompanyLid() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: 'mysql5021.site4now.net',
+        host: '10.0.2.2',
         port: 3306,
-        user: 'a5e6d1_demo102',
-        db: 'db_a5e6d1_demo102',
-        password: 'Admin@123#'));
+        user: 'root',
+        db: 'logistic',
+        password: 'Ati@radeon1'));
+//        host: 'mysql5021.site4now.net',
+//        port: 3306,
+//        user: 'a5e6d1_demo102',
+//        db: 'db_a5e6d1_demo102',
+//        password: 'Admin@123#'));
     var countCompanyId = await conn.query('SELECT company_lid FROM manager_company order by company_lid DESC LIMIT 1;');
     print(countCompanyId);
     for (var row in countCompanyId) {
@@ -72,11 +82,16 @@ class _ManagerSignUpState extends State<ManagerSignUp> {
 
   Future databaseEntry() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: 'mysql5021.site4now.net',
+        host: '10.0.2.2',
         port: 3306,
-        user: 'a5e6d1_demo102',
-        db: 'db_a5e6d1_demo102',
-        password: 'Admin@123#'));
+        user: 'root',
+        db: 'logistic',
+        password: 'Ati@radeon1'));
+//        host: 'mysql5021.site4now.net',
+//        port: 3306,
+//        user: 'a5e6d1_demo102',
+//        db: 'db_a5e6d1_demo102',
+//        password: 'Admin@123#'));
     var result1 = await conn.query(
         'insert into manager_personal (lid, name, personal_contact_number, email, aadhar_number, company_lid) values (?,?,?,?,?,?)',
         [cid, name, personalContactNumber, email, aadharNumber, companyId++]);

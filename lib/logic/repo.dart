@@ -1,4 +1,4 @@
-import 'file:///D:/Android/Project/truck/lib/logic/statemodel.dart';
+import 'package:truck/logic/statemodel.dart';
 
 class Repository {
   // http://locationsng-api.herokuapp.com/api/v1/lgas
@@ -187,7 +187,7 @@ class Repository {
           ]
         },
         {
-          "state":"Dadra and Nagar Haveli (UT)",
+          "state":"Dadra & Nagar Haveli",
           "lgas":[
             "Dadra & Nagar Haveli"
           ]

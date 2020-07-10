@@ -19,7 +19,6 @@ class ManagerInfo extends StatefulWidget {
 class _ManagerInfoState extends State<ManagerInfo> {
 
   int lid;
-
   int cid;
   String name;
   int personalContactNumber;
@@ -87,7 +86,6 @@ class _ManagerInfoState extends State<ManagerInfo> {
       email = row[2];
       aadharNumber = row[3];
       companyId = row[4];
-
     }
     var result2= await conn.query(
         'SELECT company_name, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email FROM manager_company where company_lid=$companyId');
@@ -106,11 +104,8 @@ class _ManagerInfoState extends State<ManagerInfo> {
         isLoading= false;
       });
     }
-
-
     print(result1);
     print(result2);
-
     await conn.close();
   }
 
@@ -122,7 +117,6 @@ class _ManagerInfoState extends State<ManagerInfo> {
     });
     print(lid);
     getManagerDetails();
-//      _timer = Timer(Duration(milliseconds: 5000), () {
   }
 
   @override
@@ -130,94 +124,6 @@ class _ManagerInfoState extends State<ManagerInfo> {
     getManagerDetails();
     super.dispose();
   }
-
-//  Future getOwnerPersonalDetails() async {
-//
-//    final conn = await MySqlConnection.connect(ConnectionSettings(
-//        host: '10.0.2.2',
-//        port: 3306,
-//        user: 'root',
-//        db: 'logistic',
-//        password: 'Ati@radeon1'));
-//    var result1 = await conn.query('SELECT name, personal_contact_number, email, aadhar_number, company_lid FROM owner_personal where lid=$lid');
-//    for (var row in result1) {
-//      name = row[0];
-//      personalContactNumber = row[1];
-//      email = row[2];
-//      aadharNumber = row[3];
-//      companyId = row[4];
-//      print(result1);
-//      setState(() {
-//        isLoading = false;
-//      });
-//    }
-//    await conn.close();
-//  }
-
-//  Future getOwnerCompanyDetails() async {
-//    final conn = await MySqlConnection.connect(ConnectionSettings(
-//        host: '10.0.2.2',
-//        port: 3306,
-//        user: 'root',
-//        db: 'logistic',
-//        password: 'Ati@radeon1'));
-//    var result2 = await conn.query('SELECT company_name, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email FROM owner_company where company_lid=$companyId');
-//    for (var row in result2) {
-//      companyName = row[0];
-//      companyRegistrationNumber=row[1];
-//      addLine1=row[2];
-//      addLine2=row[3];
-//      city=row[4];
-//      state=row[5];
-//      pincode=row[6];
-//      officeContactNumber=row[7];
-//      officeEmail=row[8];
-//      print(result2);
-//    }
-//
-//    await conn.close();
-//  }
-//
-//  Future setOwnerPersonalDetails() async {
-//    final conn = await MySqlConnection.connect(ConnectionSettings(
-//        host: '10.0.2.2',
-//        port: 3306,
-//        user: 'root',
-//        db: 'logistic',
-//        password: 'Ati@radeon1'));
-//    var result3 = await conn.query('update owner_personal set name=$name, personal_contact_number=$personalContactNumber, email=$email, aadhar_number=$aadharNumber where lid=$lid');
-//    await conn.close();
-//  }
-//
-//  Future setOwnerCompanyDetails() async {
-//    final conn = await MySqlConnection.connect(ConnectionSettings(
-//        host: '10.0.2.2',
-//        port: 3306,
-//        user: 'root',
-//        db: 'logistic',
-//        password: 'Ati@radeon1'));
-//    var result4 = await conn.query('update owner_company set company_name=$companyName, company_registration_number=$companyRegistrationNumber, address_number=$addLine1, address_area=$addLine2, city=$city, state=$state, pincode=$pincode, office_contact_number=$officeContactNumber, office_email=$officeEmail where company_lid=$companyId');
-//    await conn.close();
-//  }
-//
-
-//  Widget projectWidget() {
-//    return FutureBuilder(
-//      builder: (context, projectSnap) {
-//        if (projectSnap.connectionState == ConnectionState.none &&
-//            projectSnap.hasData == null) {
-//          //print('project snapshot data is: ${projectSnap.data}');
-//          return Container();
-//        }
-//        return
-//      },
-////      future: getOwnerDetails(),
-//
-//    );
-//  }
-
-
-
 
   @override
   Widget build(BuildContext context) {

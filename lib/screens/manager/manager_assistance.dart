@@ -3,14 +3,14 @@ import 'package:mysql1/mysql1.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
 import 'package:truck/constants.dart';
 
-class OwnerAssistantsList extends StatefulWidget {
+class ManagerAssistantsList extends StatefulWidget {
   @override
-  _OwnerAssistantsListState createState() => _OwnerAssistantsListState();
+  _ManagerAssistantsListState createState() => _ManagerAssistantsListState();
 }
 
-class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
+class _ManagerAssistantsListState extends State<ManagerAssistantsList> {
 
-  int cid = 1001;
+  int cid = 2001;
   bool _isLoading = true;
   List titleColumn;
   List data=[];
@@ -21,6 +21,7 @@ class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
   List<int> licenseNumber = [];
   List<int> contactNumber = [];
   List<int> driverLid = [];
+  List<int> ownerLid=[];
   List result2=[];
 
 
@@ -30,9 +31,10 @@ class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
     'License No.',
     'Mobile No.',
     'Driver Id',
+    'Owner Id',
   ];
 
-  int columns = 5;
+  int columns = 6;
   int rows = 2;
 
   var finalRes;
@@ -49,7 +51,7 @@ class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
 //        db: 'db_a5e6d1_demo102',
 //        password: 'Admin@123#'));
     var result1 = await conn.query(
-        "select assistant_lid,name,aadhar_number,license_number,contact_number,driver_lid from assistants where owner_lid=$cid");
+        "select assistant_lid,name,aadhar_number,license_number,contact_number,driver_lid,owner_lid from assistants where manager_lid=$cid");
     finalRes=result1;
     for (var row in result1) {
       assistantLid.add(row[0]);
@@ -58,6 +60,7 @@ class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
       licenseNumber.add(row[3]);
       contactNumber.add(row[4]);
       driverLid.add(row[5]);
+      ownerLid.add(row[6]);
     }
     titleColumn= _makeTitleColumn();
     result2= getData(columns, rows);
@@ -77,6 +80,8 @@ class _OwnerAssistantsListState extends State<OwnerAssistantsList> {
           data.add(contactNumber);
         }else if(j==4){
           data.add(driverLid);
+        }else if(j==5){
+          data.add(ownerLid);
         }
       }
     }setState(() {

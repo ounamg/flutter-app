@@ -34,7 +34,7 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
   int rows = 2;
 
   var finalRes;
-  Future setDriverDetails() async {
+  Future getDriverDetails() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
         host: '10.0.2.2',
         port: 3306,
@@ -84,18 +84,18 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
   @override
   void initState() {
     super.initState();
-    setDriverDetails();
+    getDriverDetails();
   }
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
         home: Scaffold(
           drawer: ClipRRect(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
             child: Drawer(
-
               child: ListView(
                 // Important: Remove any padding from the ListView.
                 padding: EdgeInsets.zero,
@@ -107,16 +107,13 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
                     child: DrawerHeader(
                       child: CircleAvatar(
                         child: Text('OG',style: kDrawerText,),
-
                       ),
                     ),
                   ),
                   ListTile(
                     dense: false,
-
                     title: Text('Logout',style: kDrawerText,),
                     onTap: () {
-
                     },
                   ),
                   ListTile(
@@ -164,11 +161,11 @@ class _OwnerDriverListState extends State<OwnerDriverList> {
                 :StickyHeadersTable(
               columnsLength: titleColumn.length,
               rowsLength: 2,
-              cellDimensions: CellDimensions(contentCellHeight: 50.0,contentCellWidth: 100.0,stickyLegendHeight: 50.0, stickyLegendWidth: 200.0),
-              columnsTitleBuilder: (i) => TableCell.stickyColumn(titleColumn[i], textStyle: kDrawerText,),
-              rowsTitleBuilder: (i) => TableCell.stickyRow(name[i],textStyle: kDrawerText,),
-              contentCellBuilder: (i, j) => TableCell.content('${result2[i][j]}',textStyle: kDrawerText,),
-              legendCell: TableCell.legend('Name',textStyle: kDrawerText,),
+//              cellDimensions: CellDimensions(contentCellHeight: 50.0,contentCellWidth: 100.0,stickyLegendHeight: 50.0, stickyLegendWidth: 200.0),
+              columnsTitleBuilder: (i) => TableCell.stickyColumn(titleColumn[i], textStyle: textTheme.button.copyWith(fontSize: 16.5)),
+              rowsTitleBuilder: (i) => TableCell.stickyRow(name[i],textStyle: textTheme.button.copyWith(fontSize: 16.5)),
+              contentCellBuilder: (i, j) => TableCell.content('${result2[i][j]}',textStyle: textTheme.button.copyWith(fontSize: 16.5)),
+              legendCell: TableCell.legend('Name',textStyle: textTheme.button.copyWith(fontSize: 16.5)),
             ),
           ),
         )
@@ -188,12 +185,10 @@ class TableCell extends StatelessWidget {
         this.cellDimensions = CellDimensions.base,
         this.colorBg = Colors.white,
         this.onTap,
-      })  : cellWidth = 200,
-        cellHeight = 100,
-        cellMargin=50,
-        cellSpacing=10.0,
-        _colorHorizontalBorder = Colors.grey,
-        _colorVerticalBorder = Colors.grey,
+      })  : cellWidth = cellDimensions.contentCellWidth,
+        cellHeight = cellDimensions.contentCellHeight,
+        _colorHorizontalBorder = Colors.amber,
+        _colorVerticalBorder = Colors.black38,
         _textAlign = TextAlign.center,
         _padding = EdgeInsets.zero;
 
@@ -201,29 +196,25 @@ class TableCell extends StatelessWidget {
       this.text, {
         this.textStyle,
         this.cellDimensions = CellDimensions.base,
-        this.colorBg = Colors.white,
+        this.colorBg = Colors.amber,
         this.onTap,
-      })  : cellWidth = 200,
-        cellHeight = 100,
-        cellMargin=50,
-        cellSpacing=10.0,
-        _colorHorizontalBorder = Colors.grey,
-        _colorVerticalBorder = Colors.grey,
+      })  : cellWidth = cellDimensions.stickyLegendWidth,
+        cellHeight = cellDimensions.stickyLegendHeight,
+        _colorHorizontalBorder = Colors.white,
+        _colorVerticalBorder = Colors.amber,
         _textAlign = TextAlign.start,
-        _padding = EdgeInsets.zero;
+        _padding = EdgeInsets.only(left: 24.0);
 
   TableCell.stickyRow(
       this.text, {
         this.textStyle,
-        this.cellDimensions,
+        this.cellDimensions = CellDimensions.base,
         this.colorBg = Colors.white,
         this.onTap,
-      })  : cellWidth = 200,
-        cellHeight = 100,
-        cellMargin= 50,
-        cellSpacing=10.0,
-        _colorHorizontalBorder = Colors.grey,
-        _colorVerticalBorder = Colors.grey,
+      })  : cellWidth = cellDimensions.contentCellWidth,
+        cellHeight = cellDimensions.stickyLegendHeight,
+        _colorHorizontalBorder = Colors.white,
+        _colorVerticalBorder = Colors.amber,
         _textAlign = TextAlign.center,
         _padding = EdgeInsets.zero;
 
@@ -233,14 +224,12 @@ class TableCell extends StatelessWidget {
         this.cellDimensions = CellDimensions.base,
         this.colorBg = Colors.white,
         this.onTap,
-      })  : cellWidth = 200,
-        cellHeight = 100,
-        cellMargin=50.0,
-        cellSpacing=10.0,
-        _colorHorizontalBorder = Colors.grey,
-        _colorVerticalBorder = Colors.grey,
+      })  : cellWidth = cellDimensions.stickyLegendWidth,
+        cellHeight = cellDimensions.contentCellHeight,
+        _colorHorizontalBorder = Colors.amber,
+        _colorVerticalBorder = Colors.black38,
         _textAlign = TextAlign.start,
-        _padding = EdgeInsets.zero;
+        _padding = EdgeInsets.only(left: 24.0);
 
   final CellDimensions cellDimensions;
 
@@ -249,8 +238,6 @@ class TableCell extends StatelessWidget {
 
   final double cellWidth;
   final double cellHeight;
-  final double cellMargin;
-  final double cellSpacing;
 
   final Color colorBg;
   final Color _colorHorizontalBorder;
@@ -268,8 +255,6 @@ class TableCell extends StatelessWidget {
       child: Container(
         width: cellWidth,
         height: cellHeight,
-//        margin: cellMargin,
-//        constraints: cellSpacing,
         padding: _padding,
         child: Column(
           children: <Widget>[

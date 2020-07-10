@@ -36,11 +36,16 @@ class _ClientSignUpState extends State<ClientSignUp> {
 
   Future getLid() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: 'mysql5021.site4now.net',
+        host: '10.0.2.2',
         port: 3306,
-        user: 'a5e6d1_demo102',
-        db: 'db_a5e6d1_demo102',
-        password: 'Admin@123#'));
+        user: 'root',
+        db: 'logistic',
+        password: 'Ati@radeon1'));
+//        host: 'mysql5021.site4now.net',
+//        port: 3306,
+//        user: 'a5e6d1_demo102',
+//        db: 'db_a5e6d1_demo102',
+//        password: 'Admin@123#'));
     print('connected');
     var countId = await conn.query('SELECT * FROM loginclient');
     print(countId);
@@ -55,11 +60,16 @@ class _ClientSignUpState extends State<ClientSignUp> {
 
   Future getCompanyLid() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: 'mysql5021.site4now.net',
+        host: '10.0.2.2',
         port: 3306,
-        user: 'a5e6d1_demo102',
-        db: 'db_a5e6d1_demo102',
-        password: 'Admin@123#'));
+        user: 'root',
+        db: 'logistic',
+        password: 'Ati@radeon1'));
+//        host: 'mysql5021.site4now.net',
+//        port: 3306,
+//        user: 'a5e6d1_demo102',
+//        db: 'db_a5e6d1_demo102',
+//        password: 'Admin@123#'));
     var countCompanyId = await conn.query('SELECT company_lid FROM client_company order by company_lid DESC LIMIT 1;');
     print(countCompanyId);
     for (var row in countCompanyId) {
@@ -74,11 +84,16 @@ class _ClientSignUpState extends State<ClientSignUp> {
 
     Future databaseEntry() async {
       final conn = await MySqlConnection.connect(ConnectionSettings(
-          host: 'mysql5021.site4now.net',
+          host: '10.0.2.2',
           port: 3306,
-          user: 'a5e6d1_demo102',
-          db: 'db_a5e6d1_demo102',
-          password: 'Admin@123#'));
+          user: 'root',
+          db: 'logistic',
+          password: 'Ati@radeon1'));
+//          host: 'mysql5021.site4now.net',
+//          port: 3306,
+//          user: 'a5e6d1_demo102',
+//          db: 'db_a5e6d1_demo102',
+//          password: 'Admin@123#'));
       print('connected');
       var result1 = await conn.query(
           'insert into clients (client_id, sender_name, aadhar_number, mobile_no, email, alt_mobile, company_name, work_type, company_reg_no,company_address,company_add_city,company_add_state,company_add_pin) values (?,?,?,?,?,?,?,?,?,?,?,?,?)',

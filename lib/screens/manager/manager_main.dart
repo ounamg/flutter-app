@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:truck/button/drawer_snippet.dart';
+import 'package:truck/screens/manager/manager_driverlist.dart';
 import 'package:truck/screens/manager/manager_info.dart';
-import 'package:truck/screens/owner/owner_assistance.dart';
-import 'package:truck/screens/owner/owner_driverlist.dart';
-import 'package:truck/screens/owner/owner_info.dart';
-import 'package:truck/screens/owner/owner_managerlist.dart';
-import 'package:truck/screens/owner/owner_trucklist.dart';
+import 'package:truck/screens/manager/manager_assistance.dart';
+import 'package:truck/screens/manager/manager_trucklist.dart';
 import 'package:mysql1/mysql1.dart';
 
 class ManagerMain extends StatefulWidget {
@@ -22,7 +20,7 @@ class _ManagerMainState extends State<ManagerMain> {
   int lid;
   bool isLoading = true;
 
-  Future getOwnerDetails() async {
+  Future getManagerDetails() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
         host: '10.0.2.2',
         port: 3306,
@@ -48,7 +46,7 @@ class _ManagerMainState extends State<ManagerMain> {
   @override
   void initState() {
     super.initState();
-    getOwnerDetails();
+    getManagerDetails();
     setState(() {
       lid = widget.idGetter;
     });
@@ -57,7 +55,7 @@ class _ManagerMainState extends State<ManagerMain> {
 
   @override
   void dispose() {
-    getOwnerDetails();
+    getManagerDetails();
     super.dispose();
   }
 
@@ -88,7 +86,6 @@ class _ManagerMainState extends State<ManagerMain> {
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
-//            crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
 
@@ -113,13 +110,12 @@ class _ManagerMainState extends State<ManagerMain> {
                           leading: Icon(Icons.local_shipping,size: 56.0,color: Colors.black87,),
                           title: Text('Trucks'),
                           subtitle: Text('List of Trucks, Add/View Trucks'),
-
                           onTap: (){
-//                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-//                              return OwnerTruckList(null);
-//                            },
-//                            )
-//                            );
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return ManagerTruckList();
+                            },
+                            )
+                            );
                           },
                         ),
                       ),
@@ -131,7 +127,7 @@ class _ManagerMainState extends State<ManagerMain> {
                           subtitle: Text('Hired Drivers, Drivers on Duty'),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return OwnerDriverList();
+                              return ManagerDriverList();
                             },
                             )
                             );
@@ -147,7 +143,7 @@ class _ManagerMainState extends State<ManagerMain> {
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return OwnerAssistantsList();
+                                    return ManagerAssistantsList();
                                   },
                                 ),
                                 );
@@ -161,12 +157,12 @@ class _ManagerMainState extends State<ManagerMain> {
                             title: Text('Managers'),
                             subtitle: Text('Appointed Managers'),
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(
-                                builder: (context) {
-                                  return OwnerManagerList();
-                                },
-                              ),
-                              );
+//                              Navigator.push(context, MaterialPageRoute(
+//                                builder: (context) {
+//                                  return OwnerManagerList();
+//                                },
+//                              ),
+//                              );
                             }
                         ),
                       ),

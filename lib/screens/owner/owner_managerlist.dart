@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:table_sticky_headers/table_sticky_headers.dart';
 import 'package:truck/button/drawer_snippet.dart';
-import 'package:truck/constants.dart';
-import 'package:truck/button/drawer_snippet.dart';
+
 class OwnerManagerList extends StatefulWidget {
   @override
   _OwnerManagerListState createState() => _OwnerManagerListState();
@@ -25,6 +24,12 @@ class _OwnerManagerListState extends State<OwnerManagerList> {
   List companyName = [];
   List result2=[];
 
+  int columns = 5;
+  int rows = 2;
+
+  var finalRes;
+  List newRes = [];
+
   List<String> _makeTitleColumn() => [
     'Id',
     'Mobile No.',
@@ -32,12 +37,6 @@ class _OwnerManagerListState extends State<OwnerManagerList> {
     'Aadhar',
     'Company',
   ];
-
-  int columns = 5;
-  int rows = 2;
-
-  var finalRes;
-  List newRes = [];
 
   Future setDriverDetails() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
@@ -144,8 +143,9 @@ class _OwnerManagerListState extends State<OwnerManagerList> {
     );
   }
 }
-///////////////////////////////////////////////////////////////////////////////////
+
 class TableCell extends StatelessWidget {
+
   TableCell.content(
       this.text, {
         this.textStyle,
@@ -254,236 +254,3 @@ class TableCell extends StatelessWidget {
     );
   }
 }
-//class TableCell extends StatelessWidget {
-//  TableCell.content(
-//      this.text, {
-//        this.textStyle,
-//        this.cellDimensions = CellDimensions.base,
-//        this.colorBg = Colors.white,
-//        this.onTap,
-//      })  : cellWidth = 200,
-//        cellHeight = 100,
-////        cellMargin=50,
-////        cellSpacing=10.0,
-//        _colorHorizontalBorder = Colors.grey,
-//        _colorVerticalBorder = Colors.grey,
-//        _textAlign = TextAlign.center,
-//        _padding = EdgeInsets.zero;
-//
-//  TableCell.legend(
-//      this.text, {
-//        this.textStyle,
-//        this.cellDimensions = CellDimensions.base,
-//        this.colorBg = Colors.white,
-//        this.onTap,
-//      })  : cellWidth = 200,
-//        cellHeight = 100,
-////        cellMargin=50,
-////        cellSpacing=10.0,
-//        _colorHorizontalBorder = Colors.grey,
-//        _colorVerticalBorder = Colors.grey,
-//        _textAlign = TextAlign.start,
-//        _padding = EdgeInsets.zero;
-//
-//  TableCell.stickyRow(
-//      this.text, {
-//        this.textStyle,
-//        this.cellDimensions,
-//        this.colorBg = Colors.white,
-//        this.onTap,
-//      })  : cellWidth = 200,
-//        cellHeight = 100,
-////        cellMargin= 50,
-////        cellSpacing=10.0,
-//        _colorHorizontalBorder = Colors.grey,
-//        _colorVerticalBorder = Colors.grey,
-//        _textAlign = TextAlign.center,
-//        _padding = EdgeInsets.zero;
-//
-//  TableCell.stickyColumn(
-//      this.text, {
-//        this.textStyle,
-//        this.cellDimensions = CellDimensions.base,
-//        this.colorBg = Colors.white,
-//        this.onTap,
-//      })  : cellWidth = 200,
-//        cellHeight = 100,
-////        cellMargin=50.0,
-////        cellSpacing=10.0,
-//        _colorHorizontalBorder = Colors.grey,
-//        _colorVerticalBorder = Colors.grey,
-//        _textAlign = TextAlign.start,
-//        _padding = EdgeInsets.zero;
-//
-//  final CellDimensions cellDimensions;
-//
-//  final String text;
-//  final Function onTap;
-//
-//  final double cellWidth;
-//  final double cellHeight;
-////  final double cellMargin;
-////  final double cellSpacing;
-//
-//  final Color colorBg;
-//  final Color _colorHorizontalBorder;
-//  final Color _colorVerticalBorder;
-//
-//  final TextAlign _textAlign;
-//  final EdgeInsets _padding;
-//
-//  final TextStyle textStyle;
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return GestureDetector(
-//      onTap: onTap,
-//      child: Container(
-//        width: cellWidth,
-//        height: cellHeight,
-////        margin: cellMargin,
-////        constraints: cellSpacing,
-//        padding: _padding,
-//        child: Column(
-//          children: <Widget>[
-//            Expanded(
-//              child: Container(
-//                alignment: Alignment.center,
-////                padding: EdgeInsets.symmetric(horizontal: 2.0),
-//                child: Text(
-//                  text,
-//                  style: textStyle,
-//                  maxLines: 2,
-//                  textAlign: _textAlign,
-//                ),
-//              ),
-//            ),
-//            Container(
-//              width: double.infinity,
-//              height: 1.1,
-//              color: _colorVerticalBorder,
-//            ),
-//          ],
-//        ),
-//        decoration: BoxDecoration(
-//            border: Border(
-//              left: BorderSide(color: _colorHorizontalBorder),
-//              right: BorderSide(color: _colorHorizontalBorder),
-//            ),
-//            color: colorBg),
-//      ),
-//    );
-//  }
-//}
-
-//class TableCell extends StatelessWidget {
-//  TableCell.content(
-//      this.text, {
-//        this.textStyle,
-//        this.cellDimensions = CellDimensions.base,
-//        this.colorBg = Colors.white,
-//        this.onTap,
-//      })  : cellWidth = 400.0,
-//        cellHeight = 100.0,
-//        _colorHorizontalBorder = Colors.amber,
-//        _colorVerticalBorder = Colors.black38,
-//        _textAlign = TextAlign.center,
-//        _padding = EdgeInsets.zero;
-//
-//  TableCell.legend(
-//      this.text, {
-//        this.textStyle,
-//        this.cellDimensions = CellDimensions.base,
-//        this.colorBg = Colors.amber,
-//        this.onTap,
-//      })  : cellWidth = 400.0,
-//        cellHeight = 100.0,
-//        _colorHorizontalBorder = Colors.white,
-//        _colorVerticalBorder = Colors.amber,
-//        _textAlign = TextAlign.start,
-//        _padding = EdgeInsets.only(left: 24.0);
-//
-//  TableCell.stickyRow(
-//      this.text, {
-//        this.textStyle,
-//        this.cellDimensions = CellDimensions.base,
-//        this.colorBg = Colors.white,
-//        this.onTap,
-//      })  : cellWidth = 400.0,
-//        cellHeight = 100.0,
-//        _colorHorizontalBorder = Colors.white,
-//        _colorVerticalBorder = Colors.amber,
-//        _textAlign = TextAlign.center,
-//        _padding = EdgeInsets.zero;
-//
-//  TableCell.stickyColumn(
-//      this.text, {
-//        this.textStyle,
-//        this.cellDimensions = CellDimensions.base,
-//        this.colorBg = Colors.white,
-//        this.onTap,
-//      })  : cellWidth = 400.0,
-//        cellHeight = 100.0,
-//        _colorHorizontalBorder = Colors.amber,
-//        _colorVerticalBorder = Colors.black38,
-//        _textAlign = TextAlign.start,
-//        _padding = EdgeInsets.only(left: 24.0);
-//
-//  final CellDimensions cellDimensions;
-//
-//  final String text;
-//  final Function onTap;
-//
-//  final double cellWidth;
-//  final double cellHeight;
-//
-//  final Color colorBg;
-//  final Color _colorHorizontalBorder;
-//  final Color _colorVerticalBorder;
-//
-//  final TextAlign _textAlign;
-//  final EdgeInsets _padding;
-//
-//  final TextStyle textStyle;
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return GestureDetector(
-//      onTap: onTap,
-//      child: Container(
-//        width: 200.0,
-//        height: 50.0,
-//        padding: _padding,
-//        child: Column(
-//          children: <Widget>[
-//            Expanded(
-//              child: Container(
-//                alignment: Alignment.center,
-//                padding: EdgeInsets.symmetric(horizontal: 2.0),
-//                child: Text(
-//                  text,
-//                  style: textStyle,
-//                  maxLines: 2,
-//                  textAlign: _textAlign,
-//                ),
-//              ),
-//            ),
-//            Container(
-//              width: 150.0,
-//              height: 1.1,
-//              color: _colorVerticalBorder,
-//            ),
-//          ],
-//        ),
-//        decoration: BoxDecoration(
-//            border: Border(
-//              left: BorderSide(color: _colorHorizontalBorder),
-//              right: BorderSide(color: _colorHorizontalBorder),
-//            ),
-//            color: colorBg),
-//      ),
-//    );
-//  }
-//}
-
-
