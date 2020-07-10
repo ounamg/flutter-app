@@ -53,11 +53,11 @@ class _OwnerMainState extends State<OwnerMain> {
     print(lid);
   }
 
-  @override
-  void dispose() {
-    getOwnerDetails();
-    super.dispose();
-  }
+//  @override
+//  void dispose() {
+//    getOwnerDetails();
+//    super.dispose();
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,8 +156,8 @@ class _OwnerMainState extends State<OwnerMain> {
                         color: Color(0xffF2F4F7),
                         child: ListTile(
                           leading: Icon(Icons.person_pin_circle,size: 56.0,color: Colors.black87,),
-                          title: Text('Managers'),
-                          subtitle: Text('Appointed Managers'),
+                          title: Text('Manager List'),
+                          subtitle: Text('Company Manager List'),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {

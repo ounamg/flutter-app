@@ -12,7 +12,7 @@ class OwnerTruckList extends StatefulWidget {
 }
 
 class _OwnerTruckListState extends State<OwnerTruckList> {
-//  final selected = SelectedItemWidget();
+
   int cid = 1001;
   List<String> truckNum = [];
   List<String> vehicleClass = [];
@@ -20,11 +20,20 @@ class _OwnerTruckListState extends State<OwnerTruckList> {
   List<int> driverLid = [];
   List<String> managerName = [];
   List<int> managerLid = [];
+  List<String> ccity=[];
+  List<String> sstate=[];
   var resultFinal;
   int res1;
   bool _isLoading = true;
+//  String state;
+//  String city;
+  bool newAppliedState = false;
+  bool newAppliedCity = false;
+  String query;
+  String query1;
+  bool isLoading = true;
 
-  Future setTruckDetails() async {
+  Future setTruckDetails(query1,query) async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
         host: '10.0.2.2',
         port: 3306,
@@ -37,13 +46,14 @@ class _OwnerTruckListState extends State<OwnerTruckList> {
 //        db: 'db_a5e6d1_demo102',
 //        password: 'Admin@123#'));
     var result1 =
-        await conn.query("select count(*) from trucks where owner_lid=$cid");
-    var result2 = await conn.query(
-        "select truck_number, vehicle_class,driver_name,driver_lid,manager_name,manager_lid from trucks where owner_lid=$cid");
+        await conn.query(query1);
+    var result2 = await conn.query(query);
     resultFinal = result2;
     for (var ro in result1) {
       res1 = ro[0];
+
     }
+    print('ab mei yaha hu');
     for (var row in result2) {
       truckNum.add(row[0]);
       vehicleClass.add(row[1]);
@@ -51,38 +61,107 @@ class _OwnerTruckListState extends State<OwnerTruckList> {
       driverLid.add(row[3]);
       managerName.add(row[4]);
       managerLid.add(row[5]);
+      ccity.add(row[6]);
+      sstate.add(row[7]);
       setState(() {
         _isLoading = false;
+        isLoading = false;
       });
     }
-//    print(res1);
-//    print(truckNum);
-//    print(managerLid);
     await conn.close();
-
-//    print(truckNum);
   }
 
   bool _show = true;
-
+  String newState;
+  String newCity;
   String _selectedItem;
+
+  void stateName(String state,bool appliedState){
+    newState = state;
+    newAppliedState= appliedState;
+    print(newState);
+    print(newAppliedState);
+  }
+  void cityName(String city,bool appliedCity){
+    newCity = city;
+    newAppliedCity= appliedCity;
+    print(newAppliedCity);
+  }
+
+  selectFilter(){
+    print('Reached here');
+     if (newAppliedState == true && newAppliedCity == false) {
+        truckNum.removeRange(0, truckNum.length);
+        vehicleClass.removeRange(0, vehicleClass.length);
+        driverName.removeRange(0, driverName.length);
+        driverLid.removeRange(0, driverLid.length);
+        managerName.removeRange(0, managerName.length);
+        managerLid.removeRange(0, managerLid.length);
+        ccity.removeRange(0, ccity.length);
+        sstate.removeRange(0, sstate.length);
+        res1=0;
+        setTruckDetails("select count(*) from trucks where state='$newState' AND owner_lid=1001", "select truck_number, vehicle_class, driver_name, driver_lid, manager_name, manager_lid, city, state from trucks where state = '$newState' AND owner_lid=1001");
+//        return isLoading ?
+//            CircularProgressIndicator()
+//            :ListView.builder(
+//            shrinkWrap: true,
+//            itemCount: res1,
+////            addAutomaticKeepAlives: true,
+//            itemBuilder: (context, index) => _buildRow(index)
+//        );
+  }
+      else if (newAppliedState == true && newAppliedCity == true) {
+       truckNum.removeRange(0, truckNum.length);
+       vehicleClass.removeRange(0, vehicleClass.length);
+       driverName.removeRange(0, driverName.length);
+       driverLid.removeRange(0, driverLid.length);
+       managerName.removeRange(0, managerName.length);
+       managerLid.removeRange(0, managerLid.length);
+       ccity.removeRange(0, ccity.length);
+       sstate.removeRange(0, sstate.length);
+       res1=0;
+        setTruckDetails("select count(*) from trucks where state='$newState' AND city = '$newCity'AND owner_lid=1001","select truck_number, vehicle_class,driver_name,driver_lid,manager_name,manager_lid,city,state from trucks where state='$newState' AND city = '$newCity' AND owner_lid= '$cid'");
+//        return isLoading ?
+//        CircularProgressIndicator()
+//            :Container(
+//              child: ListView.builder(
+//              shrinkWrap: true,
+////              itemCount: 0,
+//              itemBuilder: (context, index) => _buildRow(index)),
+//            );
+      }
+      else{
+        print('its here');
+        setTruckDetails("select count(*) from trucks where owner_lid=1001","select truck_number, vehicle_class,driver_name,driver_lid,manager_name,manager_lid,city,state from trucks where owner_lid = $cid");
+//        return isLoading ?
+//        CircularProgressIndicator()
+//            :Container(
+//              child: ListView.builder(
+//              shrinkWrap: true,
+//              itemCount: res1,
+//              itemBuilder: (context, index) => _buildRow(index)),
+//            );
+      }
+  }
 
   @override
   void initState() {
     super.initState();
-    setTruckDetails();
+    selectFilter();
   }
+
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    setState(() {});
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
         drawer: DrawerSnippet(),
         appBar: AppBar(
           title: Text(
@@ -151,57 +230,65 @@ class _OwnerTruckListState extends State<OwnerTruckList> {
                           });
                         },
                       ),
-                    StateCityDD(),
+                    StateCityDD(stateName,cityName),
+                    FlatButton(child: Text('Filter'),onPressed: () {
+                    setState(() {
+                      selectFilter();
+                    });
+        },),
                     SizedBox(
                       height: 10.0,
                     ),
+//                      selectFilter()
                     ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: res1,
-                        itemBuilder: (context, index) => _buildRow(index))
+                    shrinkWrap: true,
+                    itemCount: res1,
+                    itemBuilder: (context, index) => _buildRow(index)),
                   ]))));
   }
 
   _buildRow(int index) {
-    return Card(
-        elevation: 2.0,
-        color: Colors.lightGreen,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListTile(
-                leading: Icon(Icons.local_shipping),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return Material(
+      child: Card(
+          elevation: 2.0,
+          color: Colors.lightGreen,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading: Icon(Icons.local_shipping),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
 //                  alignment: WrapAlignment.start,
-                  children: <Widget>[
+                    children: <Widget>[
 //                    Text('${index.toString()}  '),
-                    Text('Truck No. :- ${truckNum[index]}'),
-                    Text('Driver Name :- ${driverName[index]}'),
-                    Text(
-                        'Manager Name:- ${managerName[index]} (Id: ${managerLid[index]})'),
+                      Text('Truck No. :- ${truckNum[index]}'),
+                      Text('Driver Name :- ${driverName[index]}'),
+                      Text(
+                          'Manager Name:- ${managerName[index]} (Id: ${managerLid[index]})'),
 //                    Text('Manager Id:- '),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Wrap(
+                  children: <Widget>[
+                    Text('Vehicle Class :- ${vehicleClass[index]}'),
                   ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Wrap(
-                children: <Widget>[
-                  Text('Vehicle Class :- ${vehicleClass[index]}'),
-                ],
-              ),
-            ),
-            Wrap(
-              alignment: WrapAlignment.start,
-              children: <Widget>[Text('City:- ')],
-            )
-          ],
-        ));
+              Wrap(
+                alignment: WrapAlignment.start,
+                children: <Widget>[Text('City:- ')],
+              )
+            ],
+          )),
+    );
   }
 }
 

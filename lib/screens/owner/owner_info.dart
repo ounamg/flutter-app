@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:truck/button/drawer_snippet.dart';
 import 'package:truck/screens/owner/owner_main.dart';
 import 'package:truck/constants.dart';
 import 'package:truck/button/rounded_icon_button.dart';
@@ -50,11 +51,16 @@ class _OwnerInfoState extends State<OwnerInfo> {
 
   Future setOwnerDetails() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: 'mysql5021.site4now.net',
+//        host: 'mysql5021.site4now.net',
+//        port: 3306,
+//        user: 'a5e6d1_demo102',
+//        db: 'db_a5e6d1_demo102',
+//        password: 'Admin@123#'));
+        host: '10.0.2.2',
         port: 3306,
-        user: 'a5e6d1_demo102',
-        db: 'db_a5e6d1_demo102',
-        password: 'Admin@123#'));
+        user: 'root',
+        db: 'logistic',
+        password: 'Ati@radeon1'));
     var result3 = await conn.query("update owner_personal set name='$name', personal_contact_number='$personalContactNumber', email='$email', aadhar_number='$aadharNumber' where lid='$lid'");
     var result4 = await conn.query("update owner_company set company_name='$companyName', company_registration_number='$companyRegistrationNumber', address_number='$addLine1', address_area='$addLine2', city='$city', state='$state', pincode='$pincode', office_contact_number='$officeContactNumber', office_email='$officeEmail' where company_lid='$companyId'");
     await conn.close();
@@ -62,11 +68,16 @@ class _OwnerInfoState extends State<OwnerInfo> {
 
   Future getOwnerDetails() async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: 'mysql5021.site4now.net',
+//        host: 'mysql5021.site4now.net',
+//        port: 3306,
+//        user: 'a5e6d1_demo102',
+//        db: 'db_a5e6d1_demo102',
+//        password: 'Admin@123#'));
+        host: '10.0.2.2',
         port: 3306,
-        user: 'a5e6d1_demo102',
-        db: 'db_a5e6d1_demo102',
-        password: 'Admin@123#'));
+        user: 'root',
+        db: 'logistic',
+        password: 'Ati@radeon1'));
     var result1= await conn.query(
         'SELECT name, personal_contact_number, email, aadhar_number, company_lid FROM owner_personal where lid=$lid');
 
@@ -213,59 +224,7 @@ class _OwnerInfoState extends State<OwnerInfo> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-          drawer: ClipRRect(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
-            child: Drawer(
-
-              child: ListView(
-                // Important: Remove any padding from the ListView.
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  Container(
-                    color: Color(0xff0C1338),
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.all(10.0,),
-                    child: DrawerHeader(
-                      child: CircleAvatar(
-                        child: Text('OG',style: kDrawerText,),
-
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    dense: false,
-
-                    title: Text('Logout',style: kDrawerText,),
-                    onTap: () {
-
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Help',style: kDrawerText,),
-                    onTap: () {
-                      // Update the state of the app.
-                      // ...
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Language',style: kDrawerText,),
-                    onTap: () {
-                      // Update the state of the app.
-                      // ...
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Settings',style: kDrawerText,),
-                    onTap: () {
-                      // Update the state of the app.
-                      // ...
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
+          drawer: DrawerSnippet(),
           appBar: AppBar(
             title: Text('Information', style: TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0),),
             actions: <Widget>[FlatButton(child: Icon(Icons.arrow_back_ios,color: Colors.white,),onPressed: (){Navigator.pop(context);})],

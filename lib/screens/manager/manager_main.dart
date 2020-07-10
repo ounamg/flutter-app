@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:truck/button/drawer_snippet.dart';
+import 'package:truck/screens/manager/manager_info.dart';
 import 'package:truck/screens/owner/owner_assistance.dart';
 import 'package:truck/screens/owner/owner_driverlist.dart';
 import 'package:truck/screens/owner/owner_info.dart';
@@ -99,7 +100,7 @@ class _ManagerMainState extends State<ManagerMain> {
                           subtitle: Text('Edit/View/Add information'),
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return OwnerInfo(idGetter: widget.idGetter,);
+                              return ManagerInfo(idGetter: widget.idGetter,);
                             },
                             )
                             );
@@ -114,11 +115,11 @@ class _ManagerMainState extends State<ManagerMain> {
                           subtitle: Text('List of Trucks, Add/View Trucks'),
 
                           onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return OwnerTruckList();
-                            },
-                            )
-                            );
+//                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+//                              return OwnerTruckList(null);
+//                            },
+//                            )
+//                            );
                           },
                         ),
                       ),

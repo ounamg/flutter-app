@@ -63,11 +63,11 @@ class _LoginPageState extends State<LoginPage> {
   Future databaseEntry() async {
 
     final conn = await MySqlConnection.connect(ConnectionSettings(
-        host: 'mysql5021.site4now.net',
-        port: 3306,
-        user: 'a5e6d1_demo102',
-        db: 'db_a5e6d1_demo102',
-        password: 'Admin@123#'));
+          host: '10.0.2.2',
+          port: 3306,
+          user: 'root',
+          db: 'logistic',
+          password: 'Ati@radeon1'));
 //        host: 'mysql5021.site4now.net',
 //        port: 3306,
 //        user: 'a5e6d1_demo102',
