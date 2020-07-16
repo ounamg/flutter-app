@@ -5,6 +5,7 @@ import 'package:truck/button/rounded_icon_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:truck/constants.dart';
 import 'package:truck/button/dropdownbutton_login.dart';
+import 'package:truck/screens/client/client_main.dart';
 import 'package:truck/screens/manager/manager_main.dart';
 import '../screens/signup/sign_up.dart';
 import 'package:mysql1/mysql1.dart';
@@ -96,6 +97,13 @@ class _LoginPageState extends State<LoginPage> {
           if (newId == int.parse(cid) && newPass == password) {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return ManagerMain(idGetter: newId,);},));
+          }
+        }
+        break;
+        case 'login_client' :{
+          if (newId == int.parse(cid) && newPass == password) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ClientMain();},));
           }
         }
         break;

@@ -5,6 +5,7 @@ import 'package:search_widget/search_widget.dart';
 import 'package:truck/button/drawer_snippet.dart';
 import 'package:truck/constants.dart';
 import 'package:truck/button/dropdown_statecity.dart';
+import 'package:truck/button/dropdown_truckclass.dart';
 
 class ManagerTruckList extends StatefulWidget {
   @override
@@ -32,6 +33,7 @@ class _ManagerTruckListState extends State<ManagerTruckList> {
   String query;
   String query1;
   bool isLoading = true;
+  String selectedMode;
 
   Future setTruckDetails(query1,query) async {
     final conn = await MySqlConnection.connect(ConnectionSettings(
@@ -70,6 +72,10 @@ class _ManagerTruckListState extends State<ManagerTruckList> {
     }
     await conn.close();
   }
+  // Add Truck
+  String truckNumber;
+  String vehicleClass1;
+
 
   bool _show = true;
   String newState;
@@ -133,12 +139,73 @@ class _ManagerTruckListState extends State<ManagerTruckList> {
     super.dispose();
 
   }
+  void table1(String tableName){
+    selectedMode = tableName;
+  }
+  TextEditingController idController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         drawer: DrawerSnippet(),
+        floatingActionButton: FloatingActionButton(
+          elevation: 2.0,
+          child: Icon(Icons.add),
+          backgroundColor: Color(0xff0C1338),
+          onPressed: () {showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                      BorderRadius.circular(20.0)), //this right here
+                  child: Container(
+//                    height: 900,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('Add Truck', style: kDrawerText,),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(32.0, 32.0, 32.0, 4.0),
+                            child: TextField(
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                              controller: idController,
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              onChanged: (value) {
+                                truckNumber = value;
+                              },
+                              decoration: kTextFieldDecoration.copyWith(hintText: 'RJ45CF9999'),
+
+                            ),
+                          ),
+                          SizedBox(height: 20.0,),
+                          TruckClassDropDown(),
+                          SizedBox(
+//                            width: 320.0,
+                            child: RaisedButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Save",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              color: const Color(0xFF1BC0C5),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });} ,
+        ),
         appBar: AppBar(
           title: Text(
             'Trucks',

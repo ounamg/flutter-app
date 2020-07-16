@@ -15,6 +15,7 @@ class _RoundedDropDownState extends State<RoundedDropDown> {
 
   String selectedMode = 'Manager';
   List userMode = ['Client', 'Owner', 'Manager'];
+
   DropdownButton<String> androidDropdown() {
     List<DropdownMenuItem<String>> dropDownItems = [];
     for (int i = 0; i < userMode.length; i++) {
