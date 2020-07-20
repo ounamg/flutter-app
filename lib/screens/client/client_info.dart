@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:truck/button/drawer_snippet.dart';
-import 'package:truck/screens/owner/owner_main.dart';
 import 'package:truck/constants.dart';
 import 'package:truck/button/rounded_icon_button.dart';
 import 'package:mysql1/mysql1.dart';
 
 class ClientInfo extends StatefulWidget {
-//  static String id = 'OwnerInfo';
+
   final int idGetter;
   ClientInfo({Key key,@required this.idGetter}): super(key: key);
   @override
@@ -32,6 +31,7 @@ class _ClientInfoState extends State<ClientInfo> {
   int newCompanyId;
 
   String companyName;
+  String workType;
   int companyRegistrationNumber;
   String addLine1;
   String addLine2;
@@ -41,8 +41,8 @@ class _ClientInfoState extends State<ClientInfo> {
   int officeContactNumber;
   String officeEmail;
 
-  bool counterPersonalDetails= false;
-  bool counterCompanyDetails= false;
+  bool counterPersonalDetails= true;
+  bool counterCompanyDetails= true;
 
   bool isLoading = true;
 
@@ -60,8 +60,8 @@ class _ClientInfoState extends State<ClientInfo> {
         user: 'root',
         db: 'logistic',
         password: 'Ati@radeon1'));
-    var result3 = await conn.query("update manager_personal set name='$name', personal_contact_number='$personalContactNumber', email='$email', aadhar_number='$aadharNumber' where lid='$lid'");
-    var result4 = await conn.query("update manager_company set company_name='$companyName', company_registration_number='$companyRegistrationNumber', address_number='$addLine1', address_area='$addLine2', city='$city', state='$state', pincode='$pincode', office_contact_number='$officeContactNumber', office_email='$officeEmail' where company_lid='$companyId'");
+    var result3 = await conn.query("update client_personal set name='$name', personal_contact_number='$personalContactNumber', email='$email', aadhar_number='$aadharNumber' where lid='$lid'");
+    var result4 = await conn.query("update client_company set company_name='$companyName', work_type= '$workType', company_registration_number='$companyRegistrationNumber', address_number='$addLine1', address_area='$addLine2', city='$city', state='$state', pincode='$pincode', office_contact_number='$officeContactNumber', office_email='$officeEmail' where company_lid='$companyId'");
     await conn.close();
   }
 
@@ -78,7 +78,7 @@ class _ClientInfoState extends State<ClientInfo> {
         db: 'logistic',
         password: 'Ati@radeon1'));
     var result1= await conn.query(
-        'SELECT name, personal_contact_number, email, aadhar_number, company_lid FROM manager_personal where lid=$lid');
+        'SELECT name, personal_contact_number, email, aadhar_number, company_lid FROM client_personal where lid=$lid');
 
     for (var row in result1) {
       name = row[0];
@@ -88,18 +88,19 @@ class _ClientInfoState extends State<ClientInfo> {
       companyId = row[4];
     }
     var result2= await conn.query(
-        'SELECT company_name, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email FROM manager_company where company_lid=$companyId');
+        'SELECT company_name,work_type, company_registration_number, address_number, address_area, city, state, pincode, office_contact_number, office_email FROM client_company where company_lid=$companyId');
 
     for (var row in result2) {
       companyName = row[0];
-      companyRegistrationNumber = row[1];
-      addLine1 = row[2];
-      addLine2 = row[3];
-      city = row[4];
-      state = row[5];
-      pincode = row[6];
-      officeContactNumber = row[7];
-      officeEmail = row[8];
+      workType= row[1];
+      companyRegistrationNumber = row[2];
+      addLine1 = row[3];
+      addLine2 = row[4];
+      city = row[5];
+      state = row[6];
+      pincode = row[7];
+      officeContactNumber = row[8];
+      officeEmail = row[9];
       setState(() {
         isLoading= false;
       });
@@ -201,7 +202,9 @@ class _ClientInfoState extends State<ClientInfo> {
                                         size: 24.0,
                                         semanticLabel: 'Edit',),
                                       onPressed: () {
-                                        counterPersonalDetails = true;
+                                        setState(() {
+                                          counterPersonalDetails = false;
+                                        });
                                       },
                                     )
                                   ],
@@ -211,9 +214,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   color: Colors.black87,
                                 ),
                                 TextFormField(
-                                  readOnly: counterPersonalDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterPersonalDetails,
                                   initialValue: name,
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -227,9 +228,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterPersonalDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterPersonalDetails,
                                   initialValue: personalContactNumber.toString(),
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -244,9 +243,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterPersonalDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterPersonalDetails,
                                   initialValue: email,
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -260,9 +257,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterPersonalDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterPersonalDetails,
                                   initialValue: aadharNumber.toString(),
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -302,7 +297,9 @@ class _ClientInfoState extends State<ClientInfo> {
                                         size: 24.0,
                                         semanticLabel: 'Edit',),
                                       onPressed: () {
-                                        counterCompanyDetails = true;
+                                        setState(() {
+                                          counterCompanyDetails = false;
+                                        });
                                       },
 
                                     )
@@ -313,9 +310,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   color: Colors.black87,
                                 ),
                                 TextFormField(
-                                  readOnly: counterCompanyDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterCompanyDetails,
                                   initialValue: companyName,
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -330,9 +325,22 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterCompanyDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterCompanyDetails,
+                                  initialValue: workType,
+                                  style: TextStyle(
+                                    fontSize: 25.0,
+                                    height: 1.0,
+                                    color: Colors.black,
+                                  ),
+                                  decoration: InputDecoration(
+                                    labelText: 'Work Type',
+                                    border: InputBorder.none,),
+                                  onChanged: (value) {
+                                    workType = value;
+                                  },
+                                ),
+                                TextFormField(
+                                  readOnly: counterCompanyDetails,
                                   initialValue: companyRegistrationNumber.toString(),
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -347,9 +355,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterCompanyDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterCompanyDetails,
                                   initialValue: addLine1,
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -364,9 +370,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterCompanyDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterCompanyDetails,
                                   initialValue: addLine2,
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -381,9 +385,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterCompanyDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterCompanyDetails,
                                   initialValue: city,
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -397,9 +399,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterCompanyDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterCompanyDetails,
                                   initialValue: state,
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -413,9 +413,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterCompanyDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterCompanyDetails,
                                   initialValue: pincode.toString(),
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -429,9 +427,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterCompanyDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterCompanyDetails,
                                   initialValue: officeContactNumber.toString(),
                                   style: TextStyle(
                                     fontSize: 25.0,
@@ -446,9 +442,7 @@ class _ClientInfoState extends State<ClientInfo> {
                                   },
                                 ),
                                 TextFormField(
-                                  readOnly: counterCompanyDetails == true
-                                      ? false
-                                      : true,
+                                  readOnly: counterCompanyDetails,
                                   initialValue: officeEmail,
                                   style: TextStyle(
                                     fontSize: 25.0,

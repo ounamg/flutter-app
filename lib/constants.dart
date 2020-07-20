@@ -29,3 +29,8 @@ const kAppBarText = TextStyle(
 );
 
 const kAppBarStyle = TextStyle(fontWeight: FontWeight.w600,fontStyle: FontStyle.italic, fontSize: 20.0);
+
+const kFormText = TextStyle(fontWeight: FontWeight.w600,fontSize: 20.0, color: Colors.white70);
+const kFormEntry = TextStyle(fontWeight: FontWeight.bold, fontSize:  21.0, color: Colors.white);
+
+const kFormHeaders = TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: Colors.white);
