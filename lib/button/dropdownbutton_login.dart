@@ -6,6 +6,7 @@ class RoundedDropDown extends StatefulWidget {
 
   final Function table;
   String tableName;
+  String collectionName;
   RoundedDropDown(this.table);
   @override
   _RoundedDropDownState createState() => _RoundedDropDownState();
@@ -44,12 +45,15 @@ class _RoundedDropDownState extends State<RoundedDropDown> {
               selectedMode = value;
               if(selectedMode=='Owner'){
                 widget.tableName= 'login_owner';
+                widget.collectionName='owner';
               }else if(selectedMode=='Manager'){
                 widget.tableName= 'login_manager';
+                widget.collectionName='manager';
               }else{
                 widget.tableName= 'login_client';
+                widget.collectionName='client';
               }
-             return widget.table(widget.tableName);
+             return widget.table(widget.tableName,widget.collectionName);
 
             });
           },

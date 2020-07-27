@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "610023780709",
+    "firebase_url": "https://truck-0502.firebaseio.com",
+    "project_id": "truck-0502",
+    "storage_bucket": "truck-0502.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610023780709:android:53f647e817066338ed718c",
+        "android_client_info": {
+          "package_name": "com.ounam.truck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610023780709-3ts14bp0vg10gbe2ntpk6h8375bhoijf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVC55-tPp3Uklp_r18whuHPoHEpHxPyRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610023780709-3ts14bp0vg10gbe2ntpk6h8375bhoijf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

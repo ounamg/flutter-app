@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:truck/screens/login_page.dart';
 import 'package:truck/button/rounded_icon_button.dart';
 
+
 class LandingPage extends StatelessWidget {
   static String id = 'LandingPage';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -34,6 +34,8 @@ dependencies:
   search_widget: ^1.0.2
   restcountries: ^0.0.2
   curved_navigation_bar: ^0.3.3
+  cloud_firestore: ^0.13.7
+  firebase_core: ^0.4.5
 
 dev_dependencies:
   flutter_test:

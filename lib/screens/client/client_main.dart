@@ -9,6 +9,8 @@ import 'package:truck/screens/signup/sign_up.dart';
 import 'package:truck/screens/signup/signup_manager.dart';
 import 'package:truck/screens/signup/signup_owner.dart';
 class ClientMain extends StatefulWidget {
+  final int idGetter;
+  ClientMain({Key key,@required this.idGetter}): super(key: key);
   @override
   _ClientMainState createState() => _ClientMainState();
 }
